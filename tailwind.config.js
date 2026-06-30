@@ -87,7 +87,7 @@ export default {
         'slide-left': 'slide-left 0.5s ease-out',
         'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
         'float': 'float 3s ease-in-out infinite',
-        'marquee': 'marquee 30s linear infinite',
+        'marquee': 'marquee 15s linear infinite',
       },
     },
   },
