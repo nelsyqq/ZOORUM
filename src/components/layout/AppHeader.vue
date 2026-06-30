@@ -80,11 +80,11 @@ function onSearchBlur() {
         <X v-else class="h-5 w-5" />
       </button>
 
-      <RouterLink to="/" class="flex items-center gap-2" @click="closeMobile">
-        <img src="/images/logo.jpg" alt="ЗООРУМ" class="h-9 w-auto rounded-lg object-contain shadow-soft" />
+      <RouterLink to="/" class="flex shrink-0 items-center gap-1.5 sm:gap-2" @click="closeMobile">
+        <img src="/images/logo.jpg" alt="ЗООРУМ" class="h-7 w-7 rounded-md object-cover shadow-soft sm:h-9 sm:w-9" />
         <div class="leading-none">
-          <span class="font-display text-2xl font-extrabold text-forest">ЗООРУМ</span>
-          <span class="block text-[10px] font-bold uppercase tracking-[0.2em] text-muted">для питомцев</span>
+          <span class="font-display text-lg font-extrabold text-forest sm:text-2xl">ЗООРУМ</span>
+          <span class="hidden text-[10px] font-bold uppercase tracking-[0.2em] text-muted sm:block">для питомцев</span>
         </div>
       </RouterLink>
 
