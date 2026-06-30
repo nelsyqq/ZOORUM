@@ -73,6 +73,10 @@ export default {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
         },
+        'marquee': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         'fade-in': 'fade-in 0.6s ease-out',
@@ -83,6 +87,7 @@ export default {
         'slide-left': 'slide-left 0.5s ease-out',
         'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
         'float': 'float 3s ease-in-out infinite',
+        'marquee': 'marquee 30s linear infinite',
       },
     },
   },
