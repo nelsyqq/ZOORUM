@@ -105,13 +105,11 @@ function resetFilters() {
 </script>
 
 <template>
-  <section class="relative overflow-hidden">
-    <img :src="heroImage" alt="" class="absolute inset-0 h-full w-full object-cover" />
-    <div class="absolute inset-0 bg-ink/55" />
-    <div class="container-wrap relative py-14 text-white animate-fade-up">
-      <nav class="crumbs !text-white/70"><RouterLink to="/" class="hover:!text-honey">Главная</RouterLink> / <span>{{ pageTitle }}</span></nav>
-      <h1 class="mt-3 font-display text-4xl font-extrabold sm:text-5xl">{{ pageTitle }}</h1>
-      <p class="mt-2 text-white/80">{{ filteredProducts.length }} товаров для ваших питомцев</p>
+  <section class="bg-forest-light">
+    <div class="container-wrap py-10 animate-fade-up">
+      <nav class="crumbs"><RouterLink to="/" class="hover:text-forest">Главная</RouterLink> / <span>{{ pageTitle }}</span></nav>
+      <h1 class="mt-3 font-display text-3xl font-extrabold sm:text-4xl">{{ pageTitle }}</h1>
+      <p class="mt-1 text-muted">{{ filteredProducts.length }} товаров для ваших питомцев</p>
     </div>
   </section>
 

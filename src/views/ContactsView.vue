@@ -34,13 +34,11 @@ function submit() {
 </script>
 
 <template>
-  <section class="relative overflow-hidden">
-    <img :src="SITE_IMAGES.hero.puppy" alt="" class="absolute inset-0 h-full w-full object-cover" />
-    <div class="absolute inset-0 bg-forest-dark/70" />
-    <div class="container-wrap relative py-14 text-center text-white animate-fade-up">
-      <nav class="crumbs !text-white/70"><RouterLink to="/" class="hover:!text-honey">Главная</RouterLink> / Контакты</nav>
-      <h1 class="mt-3 font-display text-4xl font-extrabold">Свяжитесь с нами</h1>
-      <p class="mt-2 text-white/80">Мы всегда рады помочь вам и вашим питомцам</p>
+  <section class="bg-forest-light">
+    <div class="container-wrap py-10 text-center animate-fade-up">
+      <nav class="crumbs"><RouterLink to="/" class="hover:text-forest">Главная</RouterLink> / Контакты</nav>
+      <h1 class="mt-3 font-display text-3xl font-extrabold text-ink">Свяжитесь с нами</h1>
+      <p class="mt-1 text-muted">Мы всегда рады помочь вам и вашим питомцам</p>
     </div>
   </section>
 
