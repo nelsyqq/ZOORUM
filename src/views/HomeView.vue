@@ -9,7 +9,7 @@ import { SITE_IMAGES } from '@/utils/images'
 const products = useProductsStore()
 
 const perks = [
-  { icon: Truck, title: 'Доставка за 1–2 дня', text: 'Корм и аксессуары прямо к двери', color: 'bg-sky-light text-sky' },
+  { icon: Truck, title: 'Быстрая доставка', text: 'Корм и аксессуары прямо к двери', color: 'bg-sky-light text-sky' },
   { icon: Stethoscope, title: 'Ветеринар 24/7', text: 'Консультация перед покупкой', color: 'bg-forest-light text-forest' },
   { icon: Heart, title: 'Любовь к питомцам', text: 'Только проверенные бренды', color: 'bg-red-50 text-coral' },
   { icon: Sparkles, title: 'Бонусы и подарки', text: 'Копите лапки — получайте скидки', color: 'bg-honey-light text-honey-dark' },
