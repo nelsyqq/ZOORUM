@@ -5,7 +5,6 @@ import { SlidersHorizontal, X } from 'lucide-vue-next'
 import { useProductsStore } from '@/stores/products'
 import ProductCard from '@/components/catalog/ProductCard.vue'
 import { CATEGORIES } from '@/utils/helpers'
-import { SITE_IMAGES } from '@/utils/images'
 
 const route = useRoute()
 const router = useRouter()
@@ -46,10 +45,6 @@ const pageTitle = computed(() => {
   const cat = CATEGORIES.find((c) => c.id === activeCategory.value)
   return cat ? cat.label : 'Каталог'
 })
-
-const heroImage = computed(() =>
-  activeCategory.value ? SITE_IMAGES.categories[activeCategory.value] : SITE_IMAGES.hero.main
-)
 
 function updateSuggestions() {
   const q = search.value.toLowerCase().trim()
