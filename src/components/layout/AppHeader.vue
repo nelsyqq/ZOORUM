@@ -80,10 +80,8 @@ function onSearchBlur() {
         <X v-else class="h-5 w-5" />
       </button>
 
-      <RouterLink to="/" class="group flex items-center gap-2.5" @click="closeMobile">
-        <div class="relative flex h-10 w-10 items-center justify-center rounded-xl bg-forest text-white shadow-paw transition-transform group-hover:rotate-[-8deg]">
-          <img :src="SITE_IMAGES.hero.cat" alt="ЗООРУМ" class="absolute inset-0 h-full w-full rounded-xl object-cover opacity-30" />
-        </div>
+      <RouterLink to="/" class="flex items-center gap-2" @click="closeMobile">
+        <img src="/images/logo.jpg" alt="ЗООРУМ" class="h-9 w-auto rounded-lg object-contain shadow-soft" />
         <div class="leading-none">
           <span class="font-display text-2xl font-extrabold text-forest">ЗООРУМ</span>
           <span class="block text-[10px] font-bold uppercase tracking-[0.2em] text-muted">для питомцев</span>
