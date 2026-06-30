@@ -24,7 +24,7 @@ export default {
         sky: { DEFAULT: '#5B9BD5', light: '#EBF4FC' },
       },
       fontFamily: {
-        display: ['"Baloo 2"', 'cursive'],
+        display: ['"Baloo 2"', 'sans-serif'],
         sans: ['Nunito', 'system-ui', 'sans-serif'],
       },
       maxWidth: { wrap: '1200px' },
