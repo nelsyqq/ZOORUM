@@ -139,8 +139,8 @@ const petTypes = [
   </section>
 
   <!-- Promo banners -->
-  <section class="container-wrap pb-14">
-    <div class="grid gap-5 md:grid-cols-2">
+  <section class="container-wrap">
+    <div class="grid gap-5 pb-14 md:grid-cols-2">
       <RouterLink to="/catalog?category=food" class="group relative overflow-hidden rounded-blob shadow-paw animate-fade-up">
         <img :src="SITE_IMAGES.promo.sale" alt="Акция на корма" class="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
         <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-ink/80 to-transparent p-8 text-white">
@@ -157,6 +157,23 @@ const petTypes = [
           <p class="mt-1 text-sm opacity-90">При первой регистрации</p>
         </div>
       </RouterLink>
+    </div>
+  </section>
+
+  <!-- Perks -->
+  <section class="border-t-2 border-line bg-white py-10 animate-fade-up">
+    <div class="container-wrap">
+      <div class="mx-auto grid max-w-3xl gap-4 sm:grid-cols-3">
+        <div v-for="(p, i) in perks" :key="p.title" class="panel flex gap-4 !p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-fade-up" :class="`delay-${(i + 1) * 100}`">
+          <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" :class="p.color">
+            <component :is="p.icon" class="h-6 w-6" />
+          </div>
+          <div>
+            <strong class="block font-bold">{{ p.title }}</strong>
+            <p class="text-sm text-muted">{{ p.text }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
