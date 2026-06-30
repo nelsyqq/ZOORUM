@@ -14,7 +14,7 @@ const submitted = ref(false)
 const contacts = [
   { icon: Phone, label: 'Телефон', value: '+7 (495) 123-45-67', href: 'tel:+74951234567' },
   { icon: Mail, label: 'Email', value: 'info@zoorum.ru', href: 'mailto:info@zoorum.ru' },
-  { icon: MapPin, label: 'Адрес', value: 'г. Москва, ул. Пушкина, д. 10' },
+  { icon: MapPin, label: 'Адрес', value: 'Владимирская область, Юрьев-Польский, Советская площадь, 2Б' },
   { icon: Clock, label: 'Режим работы', value: 'Пн–Вс: 9:00 – 21:00' },
 ]
 

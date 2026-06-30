@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { ArrowRight, Heart, Truck, Stethoscope, Sparkles } from 'lucide-vue-next'
+import { ArrowRight, Heart, Truck, Stethoscope } from 'lucide-vue-next'
 import { useProductsStore } from '@/stores/products'
 import ProductCard from '@/components/catalog/ProductCard.vue'
 import { CATEGORIES } from '@/utils/helpers'
@@ -12,7 +12,6 @@ const perks = [
   { icon: Truck, title: 'Быстрая доставка', text: 'Корм и аксессуары прямо к двери', color: 'bg-sky-light text-sky' },
   { icon: Stethoscope, title: 'Ветеринар 24/7', text: 'Консультация перед покупкой', color: 'bg-forest-light text-forest' },
   { icon: Heart, title: 'Любовь к питомцам', text: 'Только проверенные бренды', color: 'bg-red-50 text-coral' },
-  { icon: Sparkles, title: 'Бонусы и подарки', text: 'Копите лапки — получайте скидки', color: 'bg-honey-light text-honey-dark' },
 ]
 
 const petTypes = [
@@ -20,12 +19,6 @@ const petTypes = [
   { label: 'Кошки', img: SITE_IMAGES.pets.cats, to: '/catalog?category=food' },
   { label: 'Птицы', img: SITE_IMAGES.pets.birds, to: '/catalog?category=accessories' },
   { label: 'Рыбки', img: SITE_IMAGES.pets.fish, to: '/catalog?category=accessories' },
-]
-
-const reviews = [
-  { name: 'Мария и Барсик', text: 'Заказываю корм уже полгода — кот доволен, доставка быстрая!', rating: 5 },
-  { name: 'Дмитрий и Рекс', text: 'Отличный выбор игрушек. Рекс в восторге от новой кости!', rating: 5 },
-  { name: 'Елена и Муся', text: 'Помогли подобрать корм для кошки с аллергией. Спасибо!', rating: 5 },
 ]
 </script>
 
@@ -164,30 +157,6 @@ const reviews = [
           <p class="mt-1 text-sm opacity-90">При первой регистрации</p>
         </div>
       </RouterLink>
-    </div>
-  </section>
-
-  <!-- Reviews -->
-  <section class="bg-ink py-14 text-white">
-    <div class="container-wrap animate-fade-up">
-      <h2 class="text-center font-display text-3xl font-bold">Отзывы хозяев</h2>
-      <p class="mt-2 text-center text-white/60">15 000+ довольных питомцев и их людей</p>
-      <div class="mt-10 grid gap-5 sm:grid-cols-3">
-        <div v-for="(r, i) in reviews" :key="r.name" class="rounded-blob bg-white/10 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 hover:bg-white/15 animate-fade-up" :class="`delay-${(i + 1) * 100}`">
-          <div class="text-honey">{{ '★'.repeat(r.rating) }}</div>
-          <p class="mt-3 text-sm leading-relaxed text-white/85">«{{ r.text }}»</p>
-          <p class="mt-4 text-sm font-bold text-honey">{{ r.name }}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="container-wrap py-14">
-    <div class="relative overflow-hidden rounded-blob bg-gradient-to-r from-forest to-forest-dark p-10 text-center text-white sm:p-14 animate-scale-in">
-      <h2 class="relative font-display text-3xl font-bold sm:text-4xl">Порадуйте питомца сегодня!</h2>
-      <p class="relative mt-3 text-forest-100 opacity-90">Более 500 товаров с доставкой по всей России</p>
-      <RouterLink to="/catalog" class="relative btn-honey mt-8 inline-flex text-base">Открыть каталог</RouterLink>
     </div>
   </section>
 </template>
