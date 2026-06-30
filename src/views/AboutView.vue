@@ -27,11 +27,8 @@ const team = [
 
 <template>
   <!-- Hero -->
-  <section class="relative overflow-hidden bg-gradient-to-br from-cream via-white to-forest-light/30">
-    <div class="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-honey-light opacity-60 blur-3xl animate-pulse-soft" />
-    <div class="absolute -bottom-10 -left-10 h-56 w-56 rounded-full bg-forest-light opacity-80 blur-3xl animate-pulse-soft" style="animation-delay: 1s" />
-
-    <div class="container-wrap relative py-14 text-center sm:py-20 animate-fade-up">
+  <section class="bg-forest-light">
+    <div class="container-wrap py-10 text-center animate-fade-up">
       <span class="inline-flex items-center gap-1.5 rounded-full bg-forest px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white shadow-soft">Наша история</span>
       <h1 class="mt-4 font-display text-[clamp(2rem,5vw,3.5rem)] font-extrabold text-ink text-balance">
         Магазин, созданный <span class="text-forest">для питомцев</span>
@@ -41,7 +38,7 @@ const team = [
   </section>
 
   <!-- Stats -->
-  <section class="container-wrap -mt-7 pb-10">
+  <section class="container-wrap py-8">
     <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
       <div v-for="(s, i) in stats" :key="s.label" class="rounded-blob bg-gradient-to-br p-5 text-center shadow-soft animate-fade-up sm:p-6" :class="`${s.color} delay-${(i + 1) * 100}`">
         <p class="font-display text-3xl font-extrabold text-forest sm:text-4xl">{{ s.value }}</p>
