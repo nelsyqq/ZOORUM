@@ -66,7 +66,7 @@ const petTypes = [
           v-for="(pet, i) in petTypes"
           :key="pet.label"
           :to="pet.to"
-          class="group relative overflow-hidden rounded-blob shadow-soft transition-all duration-300 hover:-translate-y-2 hover:shadow-paw animate-fade-up"
+          class="group relative overflow-hidden rounded-blob bg-cream shadow-soft transition-all duration-300 hover:-translate-y-2 hover:shadow-paw animate-fade-up"
           :class="`delay-${(i + 1) * 100}`"
         >
           <img :src="pet.img" :alt="pet.label" class="aspect-square img-cover transition-transform duration-500 group-hover:scale-110" />
@@ -90,7 +90,7 @@ const petTypes = [
           v-for="(cat, i) in CATEGORIES"
           :key="cat.id"
           :to="`/catalog?category=${cat.id}`"
-          class="group overflow-hidden rounded-blob bg-white shadow-soft transition-all duration-300 hover:-translate-y-2 hover:shadow-paw animate-scale-in"
+          class="group overflow-hidden rounded-blob bg-cream shadow-soft transition-all duration-300 hover:-translate-y-2 hover:shadow-paw animate-scale-in"
           :class="`delay-${(i + 1) * 100}`"
         >
           <img :src="SITE_IMAGES.categories[cat.id]" :alt="cat.label" class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-105" />
