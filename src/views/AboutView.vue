@@ -31,7 +31,7 @@ const team = [
     <div class="container-wrap py-8 text-center animate-fade-up">
       <span class="inline-flex items-center gap-1.5 rounded-full bg-forest px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-soft">Наша история</span>
       <h1 class="mt-3 font-display text-2xl font-extrabold text-ink sm:text-3xl">
-        Магазин, созданный <span class="text-forest">для питомцев</span>
+        Магазин, созданный для питомцев
       </h1>
       <p class="mt-1 max-w-md mx-auto text-sm text-muted">С 2017 года помогаем хозяевам дарить своим любимцам всё самое лучшее</p>
     </div>
