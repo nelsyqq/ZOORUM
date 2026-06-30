@@ -78,21 +78,6 @@ const petTypes = [
     </div>
   </section>
 
-  <!-- Perks -->
-  <section class="container-wrap py-14 animate-fade-up">
-    <div class="mx-auto grid max-w-3xl gap-4 sm:grid-cols-3">
-      <div v-for="(p, i) in perks" :key="p.title" class="panel flex gap-4 !p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-fade-up" :class="`delay-${(i + 1) * 100}`">
-        <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" :class="p.color">
-          <component :is="p.icon" class="h-6 w-6" />
-        </div>
-        <div>
-          <strong class="block font-bold">{{ p.title }}</strong>
-          <p class="text-sm text-muted">{{ p.text }}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Categories -->
   <section class="bg-forest-light bg-paws py-14">
     <div class="container-wrap animate-fade-up">
@@ -161,7 +146,7 @@ const petTypes = [
   </section>
 
   <!-- Perks -->
-  <section class="border-t-2 border-line bg-white py-10 animate-fade-up">
+  <section class="py-10 animate-fade-up">
     <div class="container-wrap">
       <div class="mx-auto grid max-w-3xl gap-4 sm:grid-cols-3">
         <div v-for="(p, i) in perks" :key="p.title" class="panel flex gap-4 !p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-fade-up" :class="`delay-${(i + 1) * 100}`">
