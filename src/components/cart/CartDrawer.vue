@@ -169,7 +169,7 @@ function lineTotal(item) {
                 :src="item.image"
                 :alt="item.name"
                 class="h-[72px] w-[72px] rounded-paw object-cover"
-                @error="($event.target).src = '/images/placeholder.svg'"
+                @error="($event.target).src = '/images/placeholder.jpg'"
               />
               <div>
                 <p class="text-sm font-bold leading-snug line-clamp-2">{{ item.name }}</p>
