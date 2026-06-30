@@ -100,6 +100,9 @@ function onSearchBlur() {
         >
           {{ cat.label }}
         </RouterLink>
+        <span class="text-muted/30">|</span>
+        <RouterLink to="/about" class="rounded-full px-2 py-2 text-xs font-bold transition-colors lg:px-3 lg:text-sm" :class="route.path === '/about' ? 'bg-forest-light text-forest-dark' : 'text-muted hover:bg-honey-light hover:text-ink'">О нас</RouterLink>
+        <RouterLink to="/contacts" class="rounded-full px-2 py-2 text-xs font-bold transition-colors lg:px-3 lg:text-sm" :class="route.path === '/contacts' ? 'bg-forest-light text-forest-dark' : 'text-muted hover:bg-honey-light hover:text-ink'">Контакты</RouterLink>
       </nav>
 
       <div class="ml-auto flex items-center gap-2">
