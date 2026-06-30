@@ -8,8 +8,7 @@
     "build": "vite build",
     "preview": "vite preview --open --host",
     "start": "npm install && vite --open --host",
-    "images": "node scripts/generate-images.mjs",
-    "postinstall": "node scripts/generate-images.mjs"
+    "images": "node scripts/generate-images.mjs"
   },
   "dependencies": {
     "@fontsource/baloo-2": "^5.2.5",
