@@ -131,7 +131,7 @@ function lineTotal(item) {
           v-model="address"
           rows="3"
           class="input resize-none"
-          placeholder="Владимирская область, Юрьев-Польский, Советская площадь, 2Б"
+          placeholder="Владимирская область, Юрьев-Польский, Советская площадь, 12"
         />
 
         <div class="mt-4 rounded-paw bg-forest-light p-4">

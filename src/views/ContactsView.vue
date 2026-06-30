@@ -14,7 +14,7 @@ const submitted = ref(false)
 const contacts = [
   { icon: Phone, label: 'Телефон', value: '+7 (495) 123-45-67', href: 'tel:+74951234567' },
   { icon: Mail, label: 'Email', value: 'info@zoorum.ru', href: 'mailto:info@zoorum.ru' },
-  { icon: MapPin, label: 'Адрес', value: 'Владимирская область, Юрьев-Польский, Советская площадь, 2Б' },
+  { icon: MapPin, label: 'Адрес', value: 'Владимирская область, Юрьев-Польский, Советская площадь, 12' },
   { icon: Clock, label: 'Режим работы', value: 'Пн–Вс: 9:00 – 21:00' },
 ]
 
@@ -58,7 +58,7 @@ function submit() {
         </div>
       </div>
       <div class="overflow-hidden rounded-blob shadow-soft">
-        <iframe src="https://yandex.ru/map-widget/v1/?ll=39.6814%2C56.4971&z=17&pt=39.6814%2C56.4971%2Cpm2dol&text=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C%20%D0%AE%D1%80%D1%8C%D0%B5%D0%B2-%D0%9F%D0%BE%D0%BB%D1%8C%D1%81%D0%BA%D0%B8%D0%B9%2C%20%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C%2C%202%D0%91" width="100%" height="300" style="border:0;" allowfullscreen loading="lazy" class="w-full rounded-blob"></iframe>
+        <iframe src="https://yandex.ru/map-widget/v1/?ll=39.6814%2C56.4971&z=17&pt=39.6814%2C56.4971%2Cpm2rdm&text=%D0%92%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C%20%D0%AE%D1%80%D1%8C%D0%B5%D0%B2-%D0%9F%D0%BE%D0%BB%D1%8C%D1%81%D0%BA%D0%B8%D0%B9%2C%20%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C%2C%2012" width="100%" height="300" style="border:0;" allowfullscreen loading="lazy" class="w-full rounded-blob"></iframe>
       </div>
     </div>
 

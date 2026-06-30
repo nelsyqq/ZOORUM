@@ -47,7 +47,7 @@ const year = new Date().getFullYear()
         <h4 class="mb-4 font-display font-bold text-white">Связь</h4>
         <a href="tel:+74951234567" class="block py-1.5 text-sm hover:text-honey">+7 (495) 123-45-67</a>
         <a href="mailto:info@zoorum.ru" class="block py-1.5 text-sm hover:text-honey">info@zoorum.ru</a>
-        <p class="mt-2 text-sm">Владимирская область, Юрьев-Польский, Советская площадь, 2Б</p>
+        <p class="mt-2 text-sm">Владимирская область, Юрьев-Польский, Советская площадь, 12</p>
         <p class="text-sm">Пн–Вс: 9:00 – 21:00</p>
       </div>
     </div>
