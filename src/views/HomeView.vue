@@ -80,7 +80,7 @@ const petTypes = [
 
   <!-- Perks -->
   <section class="container-wrap py-14 animate-fade-up">
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="mx-auto grid max-w-3xl gap-4 sm:grid-cols-3">
       <div v-for="(p, i) in perks" :key="p.title" class="panel flex gap-4 !p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-fade-up" :class="`delay-${(i + 1) * 100}`">
         <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" :class="p.color">
           <component :is="p.icon" class="h-6 w-6" />
