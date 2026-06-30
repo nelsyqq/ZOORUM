@@ -1,23 +1,24 @@
 <script setup>
-import { Heart, Users, Award, Stethoscope } from 'lucide-vue-next'
+import { Heart, Users, Award, Stethoscope, ArrowRight } from 'lucide-vue-next'
+import { RouterLink } from 'vue-router'
 import { SITE_IMAGES } from '@/utils/images'
 
 const stats = [
-  { value: '8+', label: 'лет с питомцами' },
-  { value: '15 000+', label: 'счастливых хвостов' },
-  { value: '500+', label: 'товаров' },
-  { value: '50+', label: 'брендов' },
+  { value: '8+', label: 'лет с питомцами', color: 'from-forest-light to-white' },
+  { value: '15 000+', label: 'счастливых хвостов', color: 'from-honey-light to-white' },
+  { value: '500+', label: 'товаров', color: 'from-sky-light to-white' },
+  { value: '50+', label: 'брендов', color: 'from-red-50 to-white' },
 ]
 
 const values = [
-  { icon: Heart, title: 'Любовь к животным', text: 'Мы сами владельцы питомцев — Милти (собака) и Барсик (кот) — наши главные консультанты.' },
-  { icon: Award, title: 'Только лучшее', text: 'Каждый товар проходит проверку — мы не продаём то, что не дали бы своим.' },
-  { icon: Users, title: 'Команда экспертов', text: 'Ветеринары и кинологи помогут подобрать корм, лекарства и аксессуары.' },
-  { icon: Stethoscope, title: 'Забота о здоровье', text: 'Консультации, витамины, препараты — здоровье питомца на первом месте.' },
+  { icon: Heart, title: 'Любовь к животным', text: 'Мы сами владельцы питомцев — наши главные консультанты.', color: 'bg-red-50 text-coral' },
+  { icon: Award, title: 'Только лучшее', text: 'Каждый товар проходит проверку — не продаём то, что не дали бы своим.', color: 'bg-honey-light text-honey-dark' },
+  { icon: Users, title: 'Команда экспертов', text: 'Ветеринары и кинологи помогают подобрать корм, лекарства и аксессуары.', color: 'bg-sky-light text-sky' },
+  { icon: Stethoscope, title: 'Забота о здоровье', text: 'Консультации, витамины, препараты — здоровье питомца на первом месте.', color: 'bg-forest-light text-forest' },
 ]
 
 const team = [
-  { name: 'Алексей', role: 'Основатель, владелец Милти', img: SITE_IMAGES.pets.dogs },
+  { name: 'Алексей', role: 'Основатель', img: SITE_IMAGES.pets.dogs },
   { name: 'Ольга', role: 'Главный ветеринар', img: SITE_IMAGES.about.team },
   { name: 'Игорь', role: 'Закупки и бренды', img: SITE_IMAGES.categories.food },
   { name: 'Наталья', role: 'Забота о клиентах', img: SITE_IMAGES.pets.cats },
@@ -25,56 +26,79 @@ const team = [
 </script>
 
 <template>
-  <section class="page-hero">
-    <div class="container-wrap animate-fade-up">
-      <span class="tag-forest mb-4">Наша история</span>
-      <h1 class="page-hero-title">Магазин, созданный <span class="text-forest">для питомцев</span></h1>
-      <p class="page-hero-text">С 2017 года помогаем хозяевам дарить своим любимцам всё самое лучшее</p>
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-cream via-white to-forest-light/30">
+    <div class="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-honey-light opacity-60 blur-3xl animate-pulse-soft" />
+    <div class="absolute -bottom-10 -left-10 h-56 w-56 rounded-full bg-forest-light opacity-80 blur-3xl animate-pulse-soft" style="animation-delay: 1s" />
+
+    <div class="container-wrap relative py-14 text-center sm:py-20 animate-fade-up">
+      <span class="inline-flex items-center gap-1.5 rounded-full bg-forest px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-white shadow-soft">Наша история</span>
+      <h1 class="mt-4 font-display text-[clamp(2rem,5vw,3.5rem)] font-extrabold text-ink text-balance">
+        Магазин, созданный <span class="text-forest">для питомцев</span>
+      </h1>
+      <p class="mt-3 max-w-lg mx-auto text-muted">С 2017 года помогаем хозяевам дарить своим любимцам всё самое лучшее</p>
     </div>
   </section>
 
-  <section class="container-wrap -mt-8 pb-10">
-    <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-      <div v-for="(s, i) in stats" :key="s.label" class="panel text-center !p-5 animate-fade-up" :class="`delay-${(i + 1) * 100}`">
-        <p class="mt-1 font-display text-3xl font-bold text-forest">{{ s.value }}</p>
+  <!-- Stats -->
+  <section class="container-wrap -mt-7 pb-10">
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+      <div v-for="(s, i) in stats" :key="s.label" class="rounded-blob bg-gradient-to-br p-5 text-center shadow-soft animate-fade-up sm:p-6" :class="`${s.color} delay-${(i + 1) * 100}`">
+        <p class="font-display text-3xl font-extrabold text-forest sm:text-4xl">{{ s.value }}</p>
         <p class="text-xs font-bold text-muted">{{ s.label }}</p>
       </div>
     </div>
   </section>
 
-  <section class="container-wrap grid items-center gap-10 pb-16 lg:grid-cols-2">
+  <!-- Story -->
+  <section class="container-wrap grid items-center gap-8 pb-12 lg:grid-cols-2">
     <img :src="SITE_IMAGES.about.store" alt="Зоомагазин" class="rounded-blob object-cover shadow-paw animate-slide-right" />
     <div class="animate-slide-left">
-      <h2 class="section-title">Как появился ЗООРУМ</h2>
-      <div class="mt-5 space-y-4 text-muted leading-relaxed">
+      <span class="inline-flex items-center gap-1.5 rounded-full bg-forest-light px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-forest-dark">Как всё начиналось</span>
+      <h2 class="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl">Как появился ЗООРУМ</h2>
+      <div class="mt-4 space-y-3 text-sm text-muted leading-relaxed sm:text-base">
         <p>Всё началось с золотистого ретривера Милти. Не найдя качественный корм и игрушки в одном месте, мы решили создать магазин, где каждый хозяин найдёт всё для своего питомца.</p>
         <p>Сегодня ЗООРУМ — это 500+ товаров, команда ветеринаров, быстрая доставка и тысячи довольных собак, кошек и их людей.</p>
       </div>
+      <RouterLink to="/catalog" class="btn-forest mt-4 inline-flex text-sm">
+        В каталог <ArrowRight class="h-4 w-4" />
+      </RouterLink>
     </div>
   </section>
 
-  <section class="bg-forest-light bg-paws py-14">
-    <div class="container-wrap animate-fade-up">
-      <h2 class="section-title text-center">Наши ценности</h2>
-      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        <div v-for="(v, i) in values" :key="v.title" class="panel transition-all duration-300 hover:-translate-y-2 hover:shadow-paw animate-fade-up" :class="`delay-${(i + 1) * 100}`">
-          <component :is="v.icon" class="h-6 w-6 text-forest" />
-          <h3 class="mt-2 font-display font-bold">{{ v.title }}</h3>
-          <p class="mt-2 text-sm text-muted">{{ v.text }}</p>
+  <!-- Values -->
+  <section class="bg-gradient-to-b from-forest-light/10 to-transparent py-12">
+    <div class="container-wrap">
+      <div class="mb-8 text-center animate-fade-up">
+        <span class="inline-flex items-center gap-1 rounded-full bg-forest-light px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-forest-dark">Наши принципы</span>
+        <h2 class="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">Наши ценности</h2>
+        <p class="mt-1 text-sm text-muted">Четыре принципа, которым мы следуем каждый день</p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div v-for="(v, i) in values" :key="v.title" class="rounded-blob bg-white p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-fade-up" :class="`delay-${(i + 1) * 100}`">
+          <div class="flex h-11 w-11 items-center justify-center rounded-xl" :class="v.color">
+            <component :is="v.icon" class="h-5 w-5" />
+          </div>
+          <h3 class="mt-3 font-display font-bold text-ink">{{ v.title }}</h3>
+          <p class="mt-1.5 text-sm text-muted">{{ v.text }}</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="container-wrap py-14">
-    <h2 class="section-title text-center animate-fade-up">Команда ЗООРУМ</h2>
-    <p class="section-subtitle text-center">Люди (и их питомцы), которые делают магазин особенным</p>
-    <div class="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-4">
-      <div v-for="(m, i) in team" :key="m.name" class="pet-card overflow-hidden text-center animate-scale-in" :class="`delay-${(i + 1) * 100}`">
+  <!-- Team -->
+  <section class="container-wrap py-12">
+    <div class="mb-8 text-center animate-fade-up">
+      <span class="inline-flex items-center gap-1 rounded-full bg-forest-light px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-forest-dark">Кто мы</span>
+      <h2 class="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">Команда ЗООРУМ</h2>
+      <p class="mt-1 text-sm text-muted">Люди (и их питомцы), которые делают магазин особенным</p>
+    </div>
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div v-for="(m, i) in team" :key="m.name" class="overflow-hidden rounded-blob bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-scale-in text-center" :class="`delay-${(i + 1) * 100}`">
         <img :src="m.img" :alt="m.name" class="aspect-square w-full object-cover" />
-        <div class="p-4">
-          <h3 class="mt-1 font-display font-bold">{{ m.name }}</h3>
-          <p class="text-xs text-muted">{{ m.role }}</p>
+        <div class="p-3 sm:p-4">
+          <h3 class="font-display font-bold text-ink">{{ m.name }}</h3>
+          <p class="mt-0.5 text-xs text-muted">{{ m.role }}</p>
         </div>
       </div>
     </div>

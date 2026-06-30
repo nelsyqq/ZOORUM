@@ -135,20 +135,4 @@ const perks = [
     </div>
   </section>
 
-  <!-- Perks -->
-  <section class="border-t border-line bg-white py-8">
-    <div class="container-wrap">
-      <div class="mx-auto grid max-w-3xl gap-4 sm:grid-cols-3">
-        <div v-for="(p, i) in perks" :key="p.title" class="flex flex-col items-center gap-3 rounded-xl bg-cream p-5 text-center shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-paw sm:p-6">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl" :class="p.color">
-            <component :is="p.icon" class="h-6 w-6" />
-          </div>
-          <div>
-            <strong class="block text-sm font-bold">{{ p.title }}</strong>
-            <p class="mt-0.5 text-xs text-muted">{{ p.text }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 </template>
