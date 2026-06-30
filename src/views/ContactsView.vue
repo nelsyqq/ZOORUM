@@ -35,7 +35,7 @@ function submit() {
 
 <template>
   <section class="bg-forest-light">
-    <div class="container-wrap py-10 text-center animate-fade-up">
+    <div class="container-wrap py-8 text-center animate-fade-up">
       <nav class="crumbs"><RouterLink to="/" class="hover:text-forest">Главная</RouterLink> / Контакты</nav>
       <h1 class="mt-3 font-display text-3xl font-extrabold text-ink">Свяжитесь с нами</h1>
       <p class="mt-1 text-muted">Мы всегда рады помочь вам и вашим питомцам</p>

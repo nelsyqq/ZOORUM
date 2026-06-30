@@ -101,7 +101,7 @@ function resetFilters() {
 
 <template>
   <section class="bg-forest-light">
-    <div class="container-wrap py-10 animate-fade-up">
+    <div class="container-wrap py-8 animate-fade-up">
       <nav class="crumbs"><RouterLink to="/" class="hover:text-forest">Главная</RouterLink> / <span>{{ pageTitle }}</span></nav>
       <h1 class="mt-3 font-display text-3xl font-extrabold sm:text-4xl">{{ pageTitle }}</h1>
       <p class="mt-1 text-muted">{{ filteredProducts.length }} товаров для ваших питомцев</p>
