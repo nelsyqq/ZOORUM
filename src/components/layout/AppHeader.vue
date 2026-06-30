@@ -135,8 +135,11 @@ function onSearchBlur() {
     </div>
 
     <Teleport to="body">
-      <div v-if="mobileOpen" class="drawer-overlay lg:hidden" @click="closeMobile" />
-      <nav v-if="mobileOpen" class="fixed right-0 top-0 z-[70] flex h-full w-[min(320px,88vw)] flex-col gap-1 overflow-y-auto bg-cream p-5 shadow-paw lg:hidden">
+      <Transition name="menu-overlay">
+        <div v-if="mobileOpen" class="drawer-overlay lg:hidden" @click="closeMobile" />
+      </Transition>
+      <Transition name="slide-menu">
+        <nav v-if="mobileOpen" class="fixed left-0 top-0 z-[70] flex h-full w-[min(320px,88vw)] flex-col gap-1 overflow-y-auto bg-cream p-5 shadow-paw lg:hidden">
         <div class="mb-4 flex items-center justify-between">
           <span class="font-display text-xl font-bold text-forest">Меню</span>
           <button class="icon-btn" @click="closeMobile"><X class="h-5 w-5" /></button>

@@ -84,6 +84,14 @@
   }
 }
 
+.menu-overlay-enter-active, .menu-overlay-leave-active { transition: opacity 0.25s ease; }
+.menu-overlay-enter-from, .menu-overlay-leave-to { opacity: 0; }
+
+.slide-menu-enter-active { transition: transform 0.3s ease-out; }
+.slide-menu-leave-active { transition: transform 0.2s ease-in; }
+.slide-menu-enter-from, .slide-menu-leave-to { transform: translateX(-100%); }
+.slide-menu-enter-to, .slide-menu-leave-from { transform: translateX(0); }
+
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .img-cover { @apply h-full w-full object-cover; }
