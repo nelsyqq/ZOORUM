@@ -51,13 +51,6 @@ const reviews = [
           </RouterLink>
           <RouterLink to="/about" class="btn-outline">Наша история</RouterLink>
         </div>
-        <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2">
-          <div class="text-center"><p class="font-display text-3xl font-bold text-forest">500+</p><p class="text-xs font-bold text-muted">товаров</p></div>
-          <div class="h-12 w-px bg-line" />
-          <div class="text-center"><p class="font-display text-3xl font-bold text-honey-dark">15K</p><p class="text-xs font-bold text-muted">хвостиков</p></div>
-          <div class="h-12 w-px bg-line" />
-          <div class="text-center"><p class="font-display text-3xl font-bold text-coral">4.9★</p><p class="text-xs font-bold text-muted">рейтинг</p></div>
-        </div>
       </div>
 
       <div class="relative mx-auto w-full max-w-lg">
