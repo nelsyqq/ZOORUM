@@ -58,7 +58,7 @@ const petTypes = [
   </section>
 
   <!-- Pet types -->
-  <section class="border-y-2 border-line bg-white py-10 animate-fade-up">
+  <section class="border-y-2 border-line bg-cream py-10 animate-fade-up">
     <div class="container-wrap">
       <p class="mb-6 text-center text-sm font-extrabold uppercase tracking-widest text-muted">Для кого покупаем?</p>
       <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -79,7 +79,7 @@ const petTypes = [
   </section>
 
   <!-- Categories -->
-  <section class="bg-forest-light bg-paws py-14">
+  <section class="bg-cream py-14">
     <div class="container-wrap animate-fade-up">
       <div class="mb-8 text-center">
         <h2 class="section-title">Что ищем сегодня?</h2>
