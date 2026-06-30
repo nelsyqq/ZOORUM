@@ -8,10 +8,12 @@ const items = [
 
 <template>
   <div class="bg-honey text-ink">
-    <div class="container-wrap flex flex-wrap items-center justify-center gap-x-8 gap-y-1 py-2 text-sm font-bold">
-      <span v-for="item in items" :key="item.text" class="flex items-center gap-1.5">
-        {{ item.text }}
-      </span>
+    <div class="container-wrap overflow-x-auto">
+      <div class="flex items-center justify-center gap-4 whitespace-nowrap py-1 text-[11px] font-bold sm:gap-8 sm:py-2 sm:text-sm">
+        <span v-for="item in items" :key="item.text" class="flex items-center gap-1.5">
+          {{ item.text }}
+        </span>
+      </div>
     </div>
   </div>
 </template>
