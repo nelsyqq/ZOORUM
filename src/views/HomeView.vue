@@ -71,11 +71,7 @@ const perks = [
 
   <!-- Stats -->
   <section class="container-wrap py-10">
-    <div class="mx-auto grid max-w-3xl gap-4 sm:grid-cols-3">
-      <div class="rounded-blob bg-gradient-to-br from-forest-light to-white p-5 text-center shadow-soft sm:p-6">
-        <p class="font-display text-3xl font-extrabold text-forest sm:text-4xl">15+</p>
-        <p class="text-xs font-bold text-muted">лет заботы</p>
-      </div>
+    <div class="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
       <div class="rounded-blob bg-gradient-to-br from-honey-light to-white p-5 text-center shadow-soft sm:p-6">
         <p class="font-display text-3xl font-extrabold text-honey-dark sm:text-4xl">3000+</p>
         <p class="text-xs font-bold text-muted">довольных клиентов</p>
