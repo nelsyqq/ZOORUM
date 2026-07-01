@@ -5,7 +5,9 @@ async function fetchAPI(path, options = {}) {
   try {
     const cacheBust = options.method === 'PUT' ? '' : `?_t=${Date.now()}`
     const res = await fetch(path + cacheBust, {
+      method: options.method || 'GET',
       headers: { 'Content-Type': 'application/json' },
+      cache: 'no-store',
       ...options,
     })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
