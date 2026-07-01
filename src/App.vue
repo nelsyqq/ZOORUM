@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import AnnounceBar from '@/components/layout/AnnounceBar.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
@@ -6,6 +7,24 @@ import AppFooter from '@/components/layout/AppFooter.vue'
 import FeedbackForm from '@/components/layout/FeedbackForm.vue'
 import CartDrawer from '@/components/cart/CartDrawer.vue'
 import AppToast from '@/components/ui/AppToast.vue'
+import { loadAllFromCloud } from '@/utils/api'
+import { useProductsStore } from '@/stores/products'
+import { useCartStore } from '@/stores/cart'
+import { useOrdersStore } from '@/stores/orders'
+import { useAuthStore } from '@/stores/auth'
+import { useReviewsStore } from '@/stores/reviews'
+import { useFeedbackStore } from '@/stores/feedback'
+
+onMounted(async () => {
+  const data = await loadAllFromCloud()
+  if (!data) return
+  useProductsStore().fromCloud(data.products)
+  useCartStore().fromCloud(data.cart)
+  useOrdersStore().fromCloud(data.orders)
+  useAuthStore().fromCloud(data.auth)
+  useReviewsStore().fromCloud(data.reviews)
+  useFeedbackStore().fromCloud(data.feedback)
+})
 </script>
 
 <template>

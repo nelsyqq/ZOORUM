@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { loadJSON, saveJSON } from '@/utils/storage'
+import { syncToCloud } from '@/utils/api'
 
 const saved = loadJSON('reviews', null)
 
@@ -16,7 +17,9 @@ export const useReviewsStore = defineStore('reviews', () => {
   let nextId = saved?.nextId ?? 7
 
   function persist() {
-    saveJSON('reviews', { reviews: reviews.value, nextId })
+    const data = { reviews: reviews.value, nextId }
+    saveJSON('reviews', data)
+    syncToCloud('reviews', data)
   }
 
   function getByProduct(productId) {
@@ -64,6 +67,12 @@ export const useReviewsStore = defineStore('reviews', () => {
 
   const ratingCount = (productId) => reviews.value.filter(r => r.productId === productId).length
 
+  function fromCloud(data) {
+    if (!data) return
+    reviews.value = data.reviews ?? []
+    if (data.nextId) nextId = data.nextId
+  }
+
   return {
     reviews,
     getByProduct,
@@ -73,5 +82,6 @@ export const useReviewsStore = defineStore('reviews', () => {
     deleteReview,
     averageRating,
     ratingCount,
+    fromCloud,
   }
 })

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 import { loadJSON, saveJSON } from '@/utils/storage'
+import { syncToCloud } from '@/utils/api'
 
 const defaultOrders = [
   {
@@ -37,7 +38,9 @@ export const useOrdersStore = defineStore('orders', () => {
   let nextOrderId = saved?.nextOrderId ?? 1003
 
   function persist() {
-    saveJSON('orders', { orders: orders.value, nextOrderId })
+    const data = { orders: orders.value, nextOrderId }
+    saveJSON('orders', data)
+    syncToCloud('orders', data)
   }
 
   watch(orders, persist, { deep: true })
@@ -90,6 +93,12 @@ export const useOrdersStore = defineStore('orders', () => {
     cancelled: 'Отменён',
   }
 
+  function fromCloud(data) {
+    if (!data) return
+    orders.value = data.orders ?? []
+    if (data.nextOrderId) nextOrderId = data.nextOrderId
+  }
+
   return {
     orders,
     getByUserId,
@@ -97,5 +106,6 @@ export const useOrdersStore = defineStore('orders', () => {
     updateOrderStatus,
     deleteOrder,
     statusLabels,
+    fromCloud,
   }
 })

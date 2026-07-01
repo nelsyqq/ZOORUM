@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import { loadJSON, saveJSON } from '@/utils/storage'
+import { syncToCloud } from '@/utils/api'
 
 const defaultUsers = [
   {
@@ -37,11 +38,9 @@ export const useAuthStore = defineStore('auth', () => {
   const userName = computed(() => currentUser.value?.name ?? '')
 
   function persist() {
-    saveJSON('auth', {
-      currentUser: currentUser.value,
-      users: users.value,
-      nextUserId,
-    })
+    const data = { currentUser: currentUser.value, users: users.value, nextUserId }
+    saveJSON('auth', data)
+    syncToCloud('auth', data)
   }
 
   watch([currentUser, users], persist, { deep: true })
@@ -126,6 +125,12 @@ export const useAuthStore = defineStore('auth', () => {
     return false
   }
 
+  function fromCloud(data) {
+    if (!data) return
+    if (data.users) users.value = data.users
+    if (data.nextUserId) nextUserId = data.nextUserId
+  }
+
   return {
     currentUser,
     users,
@@ -138,5 +143,6 @@ export const useAuthStore = defineStore('auth', () => {
     updateProfile,
     deleteUser,
     updateUserRole,
+    fromCloud,
   }
 })

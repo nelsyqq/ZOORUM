@@ -1,9 +1,21 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { loadJSON, saveJSON } from '@/utils/storage'
+import { syncToCloud } from '@/utils/api'
+
+const saved = loadJSON('feedback', null)
 
 export const useFeedbackStore = defineStore('feedback', () => {
-  const requests = ref([])
-  let nextId = 1
+  const requests = ref(saved?.requests ?? [])
+  let nextId = saved?.nextId ?? 1
+
+  function persist() {
+    const data = { requests: requests.value, nextId }
+    saveJSON('feedback', data)
+    syncToCloud('feedback', data)
+  }
+
+  watch(requests, persist, { deep: true })
 
   function submitRequest({ name, phone, email, message }) {
     const request = {
@@ -19,5 +31,11 @@ export const useFeedbackStore = defineStore('feedback', () => {
     return request
   }
 
-  return { requests, submitRequest }
+  function fromCloud(data) {
+    if (!data) return
+    requests.value = data.requests ?? []
+    if (data.nextId) nextId = data.nextId
+  }
+
+  return { requests, submitRequest, fromCloud }
 })

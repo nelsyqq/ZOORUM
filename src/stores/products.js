@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed, watch } from 'vue'
 import { getProductImage, PRODUCT_IMAGES } from '@/utils/images'
 import { loadJSON, saveJSON } from '@/utils/storage'
+import { syncToCloud } from '@/utils/api'
 
 function buildInitialProducts() {
   const imgs = (id) => [PRODUCT_IMAGES[id]]
@@ -45,7 +46,9 @@ export const useProductsStore = defineStore('products', () => {
   let nextId = saved?.nextId ?? 16
 
   watch(products, () => {
-    saveJSON('products', { products: products.value, nextId })
+    const data = { products: products.value, nextId }
+    saveJSON('products', data)
+    syncToCloud('products', data)
   }, { deep: true })
 
   const getById = (id) => products.value.find((p) => p.id === id)
@@ -89,6 +92,12 @@ export const useProductsStore = defineStore('products', () => {
 
   const featuredProducts = computed(() => products.value.slice(0, 4))
 
+  function fromCloud(data) {
+    if (!data) return
+    products.value = data.products ?? []
+    if (data.nextId) nextId = data.nextId
+  }
+
   return {
     products,
     getById,
@@ -97,5 +106,6 @@ export const useProductsStore = defineStore('products', () => {
     updateProduct,
     deleteProduct,
     featuredProducts,
+    fromCloud,
   }
 })

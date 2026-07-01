@@ -1,6 +1,7 @@
 import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { loadJSON, saveJSON, loadSession, saveSession, clearSession } from '@/utils/storage'
+import { syncToCloud } from '@/utils/api'
 
 const CHECKOUT_FLAG = 'pending_checkout'
 
@@ -18,7 +19,10 @@ export const useCartStore = defineStore('cart', () => {
 
   const isEmpty = computed(() => items.value.length === 0)
 
-  watch(items, (val) => saveJSON('cart', val), { deep: true })
+  watch(items, (val) => {
+    saveJSON('cart', val)
+    syncToCloud('cart', val)
+  }, { deep: true })
 
   function addItem(product, weight) {
     const cartKey = weight ? `${product.id}-${weight.label}` : String(product.id)
@@ -105,6 +109,11 @@ export const useCartStore = defineStore('cart', () => {
     return false
   }
 
+  function fromCloud(data) {
+    if (!data) return
+    items.value = data
+  }
+
   return {
     items,
     isOpen,
@@ -121,5 +130,6 @@ export const useCartStore = defineStore('cart', () => {
     setPendingCheckout,
     hasPendingCheckout,
     resumeCheckoutIfNeeded,
+    fromCloud,
   }
 })
