@@ -156,7 +156,10 @@ if (!product.value) {
           <span class="text-sm text-muted">{{ avgRating }} ({{ reviewCount }} {{ reviewCount === 1 ? 'отзыв' : 'отзыва' }})</span>
         </div>
 
-        <p class="mt-6 text-3xl font-bold text-forest">{{ formatPrice(product.price) }}</p>
+        <div class="mt-6 flex items-baseline gap-3">
+          <p v-if="product.oldPrice" class="text-2xl text-muted line-through">{{ formatPrice(product.oldPrice) }}</p>
+          <p class="text-3xl font-bold" :class="product.oldPrice ? 'text-coral' : 'text-forest'">{{ formatPrice(product.price) }}</p>
+        </div>
 
         <p class="mt-4 leading-relaxed text-muted">{{ product.description || 'Описание товара скоро появится.' }}</p>
 

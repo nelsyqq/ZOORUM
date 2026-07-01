@@ -25,6 +25,7 @@ const productForm = reactive({
   name: '',
   category: 'food',
   price: 0,
+  oldPrice: null,
   description: '',
   stock: 0,
   image: '',
@@ -58,6 +59,7 @@ function resetProductForm() {
   productForm.name = ''
   productForm.category = 'food'
   productForm.price = 0
+  productForm.oldPrice = null
   productForm.description = ''
   productForm.stock = 0
   productForm.image = ''
@@ -75,6 +77,7 @@ function openEditProduct(product) {
   productForm.name = product.name
   productForm.category = product.category
   productForm.price = product.price
+  productForm.oldPrice = product.oldPrice ?? null
   productForm.description = product.description
   productForm.stock = product.stock
   productForm.images = [...(product.images?.length ? product.images : [product.image || ''])]
@@ -88,6 +91,7 @@ function saveProduct() {
     name: productForm.name,
     category: productForm.category,
     price: productForm.price,
+    oldPrice: productForm.oldPrice || null,
     description: productForm.description,
     stock: productForm.stock,
     images: productForm.images.filter(Boolean),
@@ -562,9 +566,13 @@ const tabs = [
                   </select>
                 </div>
                 <div>
-                  <label class="label">Цена (₽)</label>
+                  <label class="label">Цена со скидкой (₽)</label>
                   <input v-model.number="productForm.price" type="number" min="0" class="input" required />
                 </div>
+              </div>
+              <div>
+                <label class="label">Старая цена (₽) — если нет скидки, оставьте пустым</label>
+                <input v-model.number="productForm.oldPrice" type="number" min="0" class="input" placeholder="Без скидки" />
               </div>
               <div>
                 <label class="label">Описание</label>

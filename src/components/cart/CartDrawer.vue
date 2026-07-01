@@ -173,7 +173,8 @@ function lineTotal(item) {
               />
               <div>
                 <p class="text-sm font-bold leading-snug line-clamp-2">{{ item.name }}</p>
-                <p class="mt-1 text-sm text-forest">{{ formatPrice(item.price) }} / шт.</p>
+                <p class="mt-1 text-sm" :class="item.oldPrice ? 'text-coral' : 'text-forest'">{{ formatPrice(item.price) }} / шт.</p>
+                <p v-if="item.oldPrice" class="text-xs text-muted line-through">{{ formatPrice(item.oldPrice) }} / шт.</p>
                 <div class="mt-2 flex items-center gap-2">
                   <button class="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-line font-bold transition-colors hover:bg-forest-light" aria-label="Уменьшить" @click="cart.updateQuantity(item.productId, item.quantity - 1)">
                     <Minus class="h-4 w-4" />

@@ -64,7 +64,10 @@ function onImgError(e) {
         <h3 class="mb-3 font-bold leading-snug text-ink line-clamp-2 transition-colors hover:text-forest">{{ product.name }}</h3>
       </RouterLink>
       <div class="flex items-center justify-between gap-2">
-        <span class="font-display text-xl font-bold text-forest">{{ formatPrice(product.price) }}</span>
+        <div class="flex flex-col">
+          <span v-if="product.oldPrice" class="text-sm text-muted line-through">{{ formatPrice(product.oldPrice) }}</span>
+          <span class="font-display text-xl font-bold" :class="product.oldPrice ? 'text-coral' : 'text-forest'">{{ formatPrice(product.price) }}</span>
+        </div>
         <button
           class="btn-forest btn-sm !rounded-full !px-3 transition-all duration-200 active:scale-90"
           :class="{ '!bg-honey !text-ink !scale-110': justAdded }"
