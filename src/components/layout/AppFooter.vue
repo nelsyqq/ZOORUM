@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { CATEGORIES } from '@/utils/helpers'
-import { PawPrint } from 'lucide-vue-next'
+import { PawPrint, Send, MessageCircle } from 'lucide-vue-next'
 import { SITE_IMAGES } from '@/utils/images'
 
 const year = new Date().getFullYear()
@@ -22,9 +22,9 @@ const year = new Date().getFullYear()
           Зоомагазин с душой — корма, игрушки, лежанки и ветпрепараты для ваших любимцев. Доставка по всей России.
         </p>
         <div class="mt-4 flex gap-2">
-          <img :src="SITE_IMAGES.pets.dogs" alt="Собака" class="h-10 w-10 rounded-lg object-cover" />
-          <img :src="SITE_IMAGES.pets.cats" alt="Кошка" class="h-10 w-10 rounded-lg object-cover" />
-          <img :src="SITE_IMAGES.pets.birds" alt="Птица" class="h-10 w-10 rounded-lg object-cover" />
+          <a href="#" class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-white transition-colors hover:bg-[#0088cc]"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-11 20-7-8-2-2"/><path d="M22 2 11 13"/></svg></a>
+          <a href="#" class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-white transition-colors hover:bg-[#4A76A8]"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M9 12h6"/><circle cx="12" cy="12" r="1"/></svg></a>
+          <a href="#" class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-white transition-colors hover:bg-[#25D366]"><MessageCircle class="h-5 w-5" /></a>
         </div>
       </div>
 
