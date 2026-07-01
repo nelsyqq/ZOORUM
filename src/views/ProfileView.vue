@@ -197,10 +197,6 @@ const statusColors = {
     <div v-if="!auth.isAuthenticated" class="mx-auto mt-8 max-w-md">
       <div class="panel">
         <div class="mb-6 text-center">
-          <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-forest-light to-forest shadow-soft">
-            <LogIn v-if="activeTab === 'login'" class="h-6 w-6 text-white" />
-            <UserPlus v-else class="h-6 w-6 text-white" />
-          </div>
           <h2 class="font-display text-xl font-bold">{{ activeTab === 'login' ? 'Добро пожаловать' : 'Создать аккаунт' }}</h2>
           <p class="mt-0.5 text-sm text-muted">{{ activeTab === 'login' ? 'Войдите в личный кабинет' : 'Зарегистрируйтесь для покупок' }}</p>
         </div>
