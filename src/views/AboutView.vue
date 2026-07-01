@@ -4,10 +4,8 @@ import { RouterLink } from 'vue-router'
 import { SITE_IMAGES } from '@/utils/images'
 
 const stats = [
-  { value: '8+', label: 'лет с питомцами', color: 'from-forest-light to-white' },
-  { value: '15 000+', label: 'счастливых хвостов', color: 'from-honey-light to-white' },
-  { value: '500+', label: 'товаров', color: 'from-sky-light to-white' },
-  { value: '50+', label: 'брендов', color: 'from-red-50 to-white' },
+  { value: '8+', label: 'лет с питомцами' },
+  { value: '15 000+', label: 'счастливых хвостов' },
 ]
 
 const values = [
@@ -39,10 +37,11 @@ const team = [
 
   <!-- Stats -->
   <section class="container-wrap py-8">
-    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-      <div v-for="(s, i) in stats" :key="s.label" class="rounded-blob bg-gradient-to-br p-5 text-center shadow-soft animate-fade-up sm:p-6" :class="`${s.color} delay-${(i + 1) * 100}`">
-        <p class="font-display text-3xl font-extrabold text-forest sm:text-4xl">{{ s.value }}</p>
-        <p class="text-xs font-bold text-muted">{{ s.label }}</p>
+    <div class="mx-auto grid max-w-xl grid-cols-2 gap-6">
+      <div v-for="(s, i) in stats" :key="s.label" class="rounded-blob bg-white p-6 text-center shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-fade-up" :class="`delay-${(i + 1) * 100}`">
+        <p class="font-display text-4xl font-extrabold text-forest sm:text-5xl">{{ s.value }}</p>
+        <div class="mx-auto mt-2 h-1 w-16 rounded-full bg-gradient-to-r from-forest to-forest-dark"></div>
+        <p class="mt-3 text-sm font-bold text-muted">{{ s.label }}</p>
       </div>
     </div>
   </section>
@@ -55,7 +54,7 @@ const team = [
       <h2 class="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl">Как появился ЗООРУМ</h2>
       <div class="mt-4 space-y-3 text-sm text-muted leading-relaxed sm:text-base">
         <p>Всё началось с золотистого ретривера Милти. Не найдя качественный корм и игрушки в одном месте, мы решили создать магазин, где каждый хозяин найдёт всё для своего питомца.</p>
-        <p>Сегодня ЗООРУМ — это 500+ товаров, команда ветеринаров, быстрая доставка и тысячи довольных собак, кошек и их людей.</p>
+        <p>Сегодня ЗООРУМ — это команда ветеринаров, быстрая доставка и тысячи довольных собак, кошек и их людей.</p>
       </div>
       <RouterLink to="/catalog" class="btn-forest mt-4 inline-flex text-sm">
         В каталог <ArrowRight class="h-4 w-4" />
