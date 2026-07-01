@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
-import { ShoppingBag, Check, Star, ArrowLeft, ChevronDown } from 'lucide-vue-next'
+import { ShoppingBag, Check, Star, ArrowLeft, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-vue-next'
 import { useProductsStore } from '@/stores/products'
 import { useCartStore } from '@/stores/cart'
 import { useAuthStore } from '@/stores/auth'
@@ -43,6 +43,23 @@ const categoryImage = computed(() => {
   if (!product.value) return SITE_IMAGES.hero.main
   return SITE_IMAGES.categories[product.value.category] || SITE_IMAGES.hero.main
 })
+
+const productImages = computed(() => {
+  if (!product.value) return []
+  return product.value.images?.length ? product.value.images : [product.value.image].filter(Boolean)
+})
+
+const currentPhoto = ref(0)
+
+function prevPhoto() {
+  if (productImages.value.length <= 1) return
+  currentPhoto.value = (currentPhoto.value - 1 + productImages.value.length) % productImages.value.length
+}
+
+function nextPhoto() {
+  if (productImages.value.length <= 1) return
+  currentPhoto.value = (currentPhoto.value + 1) % productImages.value.length
+}
 
 function addToCart() {
   if (!product.value) return
@@ -91,10 +108,40 @@ if (!product.value) {
     </nav>
 
     <div class="grid gap-8 lg:grid-cols-2">
-      <!-- Image -->
-      <div class="relative overflow-hidden rounded-blob bg-forest-light">
-        <img :src="product.image" :alt="product.name" class="aspect-square w-full object-cover" @error="onImgError" />
-        <div v-if="product.stock <= 5" class="absolute left-4 top-4 rounded-full bg-coral px-3 py-1 text-xs font-bold text-white">Мало</div>
+      <!-- Image gallery -->
+      <div>
+        <div class="relative overflow-hidden rounded-blob bg-forest-light">
+          <img
+            v-if="productImages.length"
+            :key="currentPhoto"
+            :src="productImages[currentPhoto]"
+            :alt="product.name"
+            class="aspect-square w-full object-cover animate-fade-in"
+            @error="onImgError"
+          />
+          <img v-else :src="product.image" :alt="product.name" class="aspect-square w-full object-cover" @error="onImgError" />
+          <div v-if="product.stock <= 5" class="absolute left-4 top-4 rounded-full bg-coral px-3 py-1 text-xs font-bold text-white">Мало</div>
+          <button v-if="productImages.length > 1" class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 shadow-soft backdrop-blur-sm transition-colors hover:bg-white" @click="prevPhoto">
+            <ChevronLeft class="h-5 w-5 text-ink" />
+          </button>
+          <button v-if="productImages.length > 1" class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 shadow-soft backdrop-blur-sm transition-colors hover:bg-white" @click="nextPhoto">
+            <ChevronRight class="h-5 w-5 text-ink" />
+          </button>
+          <div v-if="productImages.length > 1" class="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-ink/60 px-3 py-1 text-xs font-bold text-white">
+            {{ currentPhoto + 1 }} / {{ productImages.length }}
+          </div>
+        </div>
+        <div v-if="productImages.length > 1" class="mt-3 flex gap-2 overflow-x-auto">
+          <button
+            v-for="(img, idx) in productImages"
+            :key="idx"
+            class="shrink-0 overflow-hidden rounded-lg border-2 transition-all"
+            :class="idx === currentPhoto ? 'border-forest' : 'border-transparent opacity-60 hover:opacity-100'"
+            @click="currentPhoto = idx"
+          >
+            <img :src="img" alt="" class="h-16 w-16 object-cover" @error="$event.target.style.display='none'" />
+          </button>
+        </div>
       </div>
 
       <!-- Info -->

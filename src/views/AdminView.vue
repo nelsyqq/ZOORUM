@@ -28,6 +28,7 @@ const productForm = reactive({
   description: '',
   stock: 0,
   image: '',
+  images: [],
 })
 
 const categoryForm = reactive({ label: '' })
@@ -60,6 +61,7 @@ function resetProductForm() {
   productForm.description = ''
   productForm.stock = 0
   productForm.image = ''
+  productForm.images = []
   editingProduct.value = null
 }
 
@@ -75,16 +77,26 @@ function openEditProduct(product) {
   productForm.price = product.price
   productForm.description = product.description
   productForm.stock = product.stock
-  productForm.image = product.image || ''
+  productForm.images = [...(product.images?.length ? product.images : [product.image || ''])]
+  productForm.image = productForm.images[0] || ''
   showProductForm.value = true
 }
 
 function saveProduct() {
   if (!productForm.name || !productForm.price) return
+  const data = {
+    name: productForm.name,
+    category: productForm.category,
+    price: productForm.price,
+    description: productForm.description,
+    stock: productForm.stock,
+    images: productForm.images.filter(Boolean),
+  }
+  if (!data.images.length) data.images = ['']
   if (editingProduct.value) {
-    productsStore.updateProduct(editingProduct.value, { ...productForm })
+    productsStore.updateProduct(editingProduct.value, data)
   } else {
-    productsStore.addProduct({ ...productForm })
+    productsStore.addProduct(data)
   }
   showProductForm.value = false
   resetProductForm()
@@ -144,13 +156,22 @@ function getProductName(productId) {
 }
 
 function onImageUpload(e) {
-  const file = e.target.files?.[0]
-  if (!file) return
-  const reader = new FileReader()
-  reader.onload = (ev) => {
-    productForm.image = ev.target.result
-  }
-  reader.readAsDataURL(file)
+  const files = Array.from(e.target.files || [])
+  const remaining = 5 - productForm.images.length
+  if (remaining <= 0) return
+  const toAdd = files.slice(0, remaining)
+  toAdd.forEach((file) => {
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      productForm.images.push(ev.target.result)
+    }
+    reader.readAsDataURL(file)
+  })
+  e.target.value = ''
+}
+
+function removeImage(index) {
+  productForm.images.splice(index, 1)
 }
 
 const tabs = [
@@ -550,15 +571,22 @@ const tabs = [
                 <textarea v-model="productForm.description" rows="2" class="input resize-none" />
               </div>
               <div>
-                <label class="label">Изображение</label>
-                <div class="flex gap-3">
+                <label class="label">Фото (до 5 шт.)</label>
+                <div class="flex flex-wrap gap-3">
                   <label class="btn-outline btn-sm cursor-pointer">
-                    <input type="file" accept="image/jpeg,image/png,image/webp" class="hidden" @change="onImageUpload" />
-                    Выбрать файл
+                    <input type="file" accept="image/jpeg,image/png,image/webp" class="hidden" multiple @change="onImageUpload" />
+                    Выбрать файлы
                   </label>
-                  <input v-model="productForm.image" type="text" class="input flex-1" placeholder="Или вставьте URL" />
+                  <span class="self-center text-xs text-muted">{{ productForm.images.length }}/5</span>
                 </div>
-                <img v-if="productForm.image" :src="productForm.image" alt="" class="mt-2 h-20 w-20 rounded-lg border border-line object-cover" @error="$event.target.style.display='none'" />
+                <div v-if="productForm.images.length" class="mt-2 flex flex-wrap gap-2">
+                  <div v-for="(img, idx) in productForm.images" :key="idx" class="group relative">
+                    <img :src="img" alt="" class="h-20 w-20 rounded-lg border border-line object-cover" @error="$event.target.style.display='none'" />
+                    <button type="button" class="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white opacity-0 transition-opacity group-hover:opacity-100" @click="removeImage(idx)">
+                      <X class="h-3 w-3" />
+                    </button>
+                  </div>
+                </div>
               </div>
               <div>
                 <label class="label">Остаток</label>
