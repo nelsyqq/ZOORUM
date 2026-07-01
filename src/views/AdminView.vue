@@ -143,6 +143,16 @@ function getProductName(productId) {
   return productsStore.getById(productId)?.name || 'Товар удалён'
 }
 
+function onImageUpload(e) {
+  const file = e.target.files?.[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = (ev) => {
+    productForm.image = ev.target.result
+  }
+  reader.readAsDataURL(file)
+}
+
 const tabs = [
   { id: 'dashboard', label: 'Дашборд', icon: LayoutDashboard },
   { id: 'categories', label: 'Категории', icon: Archive },
@@ -540,11 +550,15 @@ const tabs = [
                 <textarea v-model="productForm.description" rows="2" class="input resize-none" />
               </div>
               <div>
-                <label class="label">Изображение (URL)</label>
+                <label class="label">Изображение</label>
                 <div class="flex gap-3">
-                  <input v-model="productForm.image" type="text" class="input flex-1" placeholder="/images/products/nazvanie.jpg" />
-                  <img v-if="productForm.image" :src="productForm.image" alt="" class="h-10 w-10 shrink-0 rounded-lg border border-line object-cover" @error="$event.target.style.display='none'" />
+                  <label class="btn-outline btn-sm cursor-pointer">
+                    <input type="file" accept="image/jpeg,image/png,image/webp" class="hidden" @change="onImageUpload" />
+                    Выбрать файл
+                  </label>
+                  <input v-model="productForm.image" type="text" class="input flex-1" placeholder="Или вставьте URL" />
                 </div>
+                <img v-if="productForm.image" :src="productForm.image" alt="" class="mt-2 h-20 w-20 rounded-lg border border-line object-cover" @error="$event.target.style.display='none'" />
               </div>
               <div>
                 <label class="label">Остаток</label>
