@@ -30,13 +30,6 @@ git push origin main  # авто-деплой на Cloudflare Pages
 
 Сайт: **https://zoorum.pages.dev**
 
-## Демо-аккаунты
-
-| Роль | Email | Пароль |
-|------|-------|--------|
-| Администратор | admin@zoorum.ru | NELSY2205 |
-| Пользователь | user@zoorum.ru | user123 |
-
 ## Страницы
 
 | Маршрут | Описание |
