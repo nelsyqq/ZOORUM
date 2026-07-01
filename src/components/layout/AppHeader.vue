@@ -127,8 +127,13 @@ function onSearchBlur() {
           to="/profile"
           class="hidden rounded-paw bg-honey px-3 py-2 text-sm font-extrabold text-ink transition-colors hover:bg-honey-dark sm:inline-flex sm:items-center sm:gap-1.5"
         >
-          <User v-if="auth.isAuthenticated" class="h-4 w-4 shrink-0" />
-          <span v-if="auth.isAuthenticated" class="max-w-[120px] truncate">{{ auth.userName.split(' ')[0] }}</span>
+          <template v-if="auth.isAuthenticated">
+            <span v-if="auth.currentUser.avatar" class="h-5 w-5 shrink-0 overflow-hidden rounded-full bg-forest-light">
+              <img :src="auth.currentUser.avatar" alt="" class="h-full w-full object-cover" />
+            </span>
+            <User v-else class="h-4 w-4 shrink-0" />
+            <span class="max-w-[120px] truncate">{{ auth.userName.split(' ')[0] }}</span>
+          </template>
           <span v-else>Войти</span>
         </RouterLink>
       </div>
