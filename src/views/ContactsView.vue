@@ -72,7 +72,7 @@ function submit() {
         <div><label class="label">Имя</label><input v-model="form.name" class="input" :class="{ 'input-error': errors.name }" placeholder="Как к вам обращаться?" /><p v-if="errors.name" class="error-text">{{ errors.name }}</p></div>
         <div><label class="label">Телефон</label><input :value="form.phone" type="tel" class="input" placeholder="+7 (___) ___-__-__" @input="onPhoneInput" /><p v-if="errors.phone" class="error-text">{{ errors.phone }}</p></div>
         <div><label class="label">Email</label><input v-model="form.email" type="email" class="input" placeholder="info@zoorum.ru" /><p v-if="errors.email" class="error-text">{{ errors.email }}</p></div>
-        <div><label class="label">Сообщение</label><textarea v-model="form.message" rows="4" class="input resize-none" placeholder="Расскажите о вашем питомце и вопросе..." /><p v-if="errors.message" class="error-text">{{ errors.message }}</p></div>
+        <div><label class="label">Обратная связь</label><textarea v-model="form.message" rows="4" class="input resize-none" placeholder="Расскажите о вашем питомце и вопросе..." /><p v-if="errors.message" class="error-text">{{ errors.message }}</p></div>
         <button type="submit" class="btn-forest btn-block"><Send class="h-4 w-4" /> Отправить</button>
       </form>
     </div>

@@ -147,7 +147,7 @@ function toggle() {
               </div>
 
               <div>
-                <label class="label" for="fb-message">Сообщение</label>
+                <label class="label" for="fb-message">Обратная связь</label>
                 <textarea
                   id="fb-message"
                   v-model="form.message"
