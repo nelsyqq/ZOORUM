@@ -5,7 +5,7 @@ import { SITE_IMAGES } from '@/utils/images'
 
 const stats = [
   { value: '8+', label: 'лет с питомцами' },
-  { value: '15 000+', label: 'счастливых хвостов' },
+  { value: '300+', label: 'счастливых хвостов' },
 ]
 
 const values = [
@@ -48,7 +48,7 @@ const team = [
 
   <!-- Story -->
   <section class="container-wrap grid items-center gap-8 pb-12 lg:grid-cols-2">
-    <img :src="SITE_IMAGES.about.store" alt="Зоомагазин" class="rounded-blob object-cover shadow-paw animate-slide-right" />
+    <img src="https://avatars.mds.yandex.net/get-altay/13789674/2a0000019daff5e6c36ef81fccd01694292b/XXXL" alt="Зоомагазин" class="rounded-blob object-cover shadow-paw animate-slide-right" />
     <div class="animate-slide-left">
       <span class="inline-flex items-center gap-1.5 rounded-full bg-forest-light px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-forest-dark">Как всё начиналось</span>
       <h2 class="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl">Как появился ЗООРУМ</h2>
