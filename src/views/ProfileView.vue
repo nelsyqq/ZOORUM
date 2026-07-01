@@ -194,75 +194,41 @@ const statusColors = {
     <div v-if="message" class="mt-4 rounded-paw bg-forest-light px-4 py-3 text-sm font-bold text-forest-dark">{{ message }}</div>
 
     <!-- Auth -->
-    <div v-if="!auth.isAuthenticated" class="relative mx-auto mt-8 max-w-lg">
-      <div class="absolute -inset-1 rounded-2xl bg-gradient-to-br from-forest via-forest-dark to-forest opacity-20 blur-xl"></div>
-      <div class="relative rounded-2xl bg-white px-8 py-10 shadow-soft ring-1 ring-line/50 sm:px-12">
-        <div class="mb-8 text-center">
-          <div class="mx-auto flex h-18 w-18 items-center justify-center rounded-2xl bg-gradient-to-br from-forest to-forest-dark shadow-lg shadow-forest/20">
-            <LogIn v-if="activeTab === 'login'" class="h-8 w-8 text-white" />
-            <UserPlus v-else class="h-8 w-8 text-white" />
+    <div v-if="!auth.isAuthenticated" class="mx-auto mt-8 max-w-md">
+      <div class="panel">
+        <div class="mb-6 text-center">
+          <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-forest-light to-forest shadow-soft">
+            <LogIn v-if="activeTab === 'login'" class="h-6 w-6 text-white" />
+            <UserPlus v-else class="h-6 w-6 text-white" />
           </div>
-          <h2 class="mt-5 font-display text-3xl font-extrabold tracking-tight">{{ activeTab === 'login' ? 'Добро пожаловать' : 'Создать аккаунт' }}</h2>
-          <p class="mt-1.5 text-sm text-muted">{{ activeTab === 'login' ? 'Войдите в личный кабинет' : 'Зарегистрируйтесь для покупок' }}</p>
+          <h2 class="font-display text-xl font-bold">{{ activeTab === 'login' ? 'Добро пожаловать' : 'Создать аккаунт' }}</h2>
+          <p class="mt-0.5 text-sm text-muted">{{ activeTab === 'login' ? 'Войдите в личный кабинет' : 'Зарегистрируйтесь для покупок' }}</p>
         </div>
 
-        <div class="relative mb-8 flex rounded-2xl bg-forest-light/50 p-1.5">
-          <div class="absolute left-1.5 top-1.5 h-[calc(50%-3px)] w-[calc(50%-6px)] rounded-xl bg-white shadow-sm transition-all duration-300" :class="activeTab === 'register' ? 'translate-x-[calc(100%+3px)]' : ''"></div>
-          <button class="relative z-10 flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-all" :class="activeTab === 'login' ? 'text-ink' : 'text-muted hover:text-ink'" @click="activeTab = 'login'">
-            Вход
-          </button>
-          <button class="relative z-10 flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-all" :class="activeTab === 'register' ? 'text-ink' : 'text-muted hover:text-ink'" @click="activeTab = 'register'">
-            Регистрация
-          </button>
+        <div class="flex gap-1 rounded-full bg-forest-light p-1">
+          <button class="flex flex-1 items-center justify-center gap-2 rounded-full py-2.5 text-sm font-bold transition-all" :class="activeTab === 'login' ? 'bg-white shadow-sm' : 'text-muted hover:text-ink'" @click="activeTab = 'login'">Вход</button>
+          <button class="flex flex-1 items-center justify-center gap-2 rounded-full py-2.5 text-sm font-bold transition-all" :class="activeTab === 'register' ? 'bg-white shadow-sm' : 'text-muted hover:text-ink'" @click="activeTab = 'register'">Регистрация</button>
         </div>
 
-        <form v-if="activeTab === 'login'" @submit.prevent="handleLogin">
-          <div class="space-y-5">
-            <div>
-              <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted">Email</label>
-              <input v-model="loginForm.email" type="email" class="input rounded-xl border-2 border-line/50 bg-white/50 px-4 py-3 text-sm transition-all focus:border-forest focus:bg-white focus:shadow-lg focus:shadow-forest/5" :class="{ '!border-coral !bg-coral/5': errors.email }" placeholder="your@email.com" />
-              <p v-if="errors.email" class="mt-1.5 text-xs font-bold text-coral">{{ errors.email }}</p>
-            </div>
-            <div>
-              <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted">Пароль</label>
-              <input v-model="loginForm.password" type="password" class="input rounded-xl border-2 border-line/50 bg-white/50 px-4 py-3 text-sm transition-all focus:border-forest focus:bg-white focus:shadow-lg focus:shadow-forest/5" :class="{ '!border-coral !bg-coral/5': errors.password }" placeholder="• • • • • • • •" />
-              <p v-if="errors.password" class="mt-1.5 text-xs font-bold text-coral">{{ errors.password }}</p>
-            </div>
+        <form v-if="activeTab === 'login'" class="mt-6" @submit.prevent="handleLogin">
+          <div class="space-y-4">
+            <div><label class="label">Email</label><input v-model="loginForm.email" type="email" class="input" :class="{ 'input-error': errors.email }" placeholder="your@email.com" /><p v-if="errors.email" class="error-text">{{ errors.email }}</p></div>
+            <div><label class="label">Пароль</label><input v-model="loginForm.password" type="password" class="input" :class="{ 'input-error': errors.password }" placeholder="* * * * * * * *" /><p v-if="errors.password" class="error-text">{{ errors.password }}</p></div>
           </div>
-          <button type="submit" class="btn-forest btn-block mt-8 rounded-xl py-3.5 text-sm font-extrabold uppercase tracking-wider shadow-lg shadow-forest/20 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-forest/25">Войти</button>
+          <button type="submit" class="btn-forest btn-block mt-6">Войти</button>
         </form>
 
-        <form v-else @submit.prevent="handleRegister">
-          <div class="space-y-5">
-            <div>
-              <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted">Имя</label>
-              <input v-model="registerForm.name" class="input rounded-xl border-2 border-line/50 bg-white/50 px-4 py-3 text-sm transition-all focus:border-forest focus:bg-white focus:shadow-lg focus:shadow-forest/5" :class="{ '!border-coral !bg-coral/5': errors.name }" placeholder="Иван Иванов" />
-              <p v-if="errors.name" class="mt-1.5 text-xs font-bold text-coral">{{ errors.name }}</p>
-            </div>
-            <div>
-              <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted">Email</label>
-              <input v-model="registerForm.email" type="email" class="input rounded-xl border-2 border-line/50 bg-white/50 px-4 py-3 text-sm transition-all focus:border-forest focus:bg-white focus:shadow-lg focus:shadow-forest/5" :class="{ '!border-coral !bg-coral/5': errors.email }" placeholder="your@email.com" />
-              <p v-if="errors.email" class="mt-1.5 text-xs font-bold text-coral">{{ errors.email }}</p>
-            </div>
-            <div>
-              <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted">Телефон</label>
-              <input :value="registerForm.phone" type="tel" class="input rounded-xl border-2 border-line/50 bg-white/50 px-4 py-3 text-sm transition-all focus:border-forest focus:bg-white focus:shadow-lg focus:shadow-forest/5" placeholder="+7 (___) ___-__-__" @input="onPhoneInput($event, registerForm)" />
-              <p v-if="errors.phone" class="mt-1.5 text-xs font-bold text-coral">{{ errors.phone }}</p>
-            </div>
-            <div class="grid gap-5 sm:grid-cols-2">
-              <div>
-                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted">Пароль</label>
-                <input v-model="registerForm.password" type="password" class="input rounded-xl border-2 border-line/50 bg-white/50 px-4 py-3 text-sm transition-all focus:border-forest focus:bg-white focus:shadow-lg focus:shadow-forest/5" placeholder="• • • • • • • •" />
-                <p v-if="errors.password" class="mt-1.5 text-xs font-bold text-coral">{{ errors.password }}</p>
-              </div>
-              <div>
-                <label class="mb-1.5 block text-xs font-bold uppercase tracking-wider text-muted">Подтверждение</label>
-                <input v-model="registerForm.confirm" type="password" class="input rounded-xl border-2 border-line/50 bg-white/50 px-4 py-3 text-sm transition-all focus:border-forest focus:bg-white focus:shadow-lg focus:shadow-forest/5" placeholder="• • • • • • • •" />
-                <p v-if="errors.confirm" class="mt-1.5 text-xs font-bold text-coral">{{ errors.confirm }}</p>
-              </div>
+        <form v-else class="mt-6" @submit.prevent="handleRegister">
+          <div class="space-y-4">
+            <div><label class="label">Имя</label><input v-model="registerForm.name" class="input" :class="{ 'input-error': errors.name }" placeholder="Иван Иванов" /><p v-if="errors.name" class="error-text">{{ errors.name }}</p></div>
+            <div><label class="label">Email</label><input v-model="registerForm.email" type="email" class="input" :class="{ 'input-error': errors.email }" placeholder="your@email.com" /><p v-if="errors.email" class="error-text">{{ errors.email }}</p></div>
+            <div><label class="label">Телефон</label><input :value="registerForm.phone" type="tel" class="input" placeholder="+7 (___) ___-__-__" @input="onPhoneInput($event, registerForm)" /><p v-if="errors.phone" class="error-text">{{ errors.phone }}</p></div>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div><label class="label">Пароль</label><input v-model="registerForm.password" type="password" class="input" placeholder="* * * * * * * *" /><p v-if="errors.password" class="error-text">{{ errors.password }}</p></div>
+              <div><label class="label">Подтверждение</label><input v-model="registerForm.confirm" type="password" class="input" placeholder="* * * * * * * *" /><p v-if="errors.confirm" class="error-text">{{ errors.confirm }}</p></div>
             </div>
           </div>
-          <button type="submit" class="btn-forest btn-block mt-8 rounded-xl py-3.5 text-sm font-extrabold uppercase tracking-wider shadow-lg shadow-forest/20 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-forest/25">Создать аккаунт</button>
+          <button type="submit" class="btn-forest btn-block mt-6">Создать аккаунт</button>
         </form>
       </div>
     </div>
