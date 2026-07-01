@@ -1,7 +1,13 @@
 export async function onRequestGet(context) {
   const value = await context.env.KV.get('all_data', 'json')
   return new Response(JSON.stringify(value || {}), {
-    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+    },
   })
 }
 

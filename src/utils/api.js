@@ -3,7 +3,8 @@ const timers = {}
 
 async function fetchAPI(path, options = {}) {
   try {
-    const res = await fetch(path, {
+    const cacheBust = options.method === 'PUT' ? '' : `?_t=${Date.now()}`
+    const res = await fetch(path + cacheBust, {
       headers: { 'Content-Type': 'application/json' },
       ...options,
     })
