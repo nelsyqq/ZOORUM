@@ -31,6 +31,15 @@ export function syncToCloud(key, value) {
   }, SYNC_DELAY)
 }
 
+export function syncToCloudNow(key, value) {
+  clearTimeout(timers[key])
+  fetchAPI('/api/data', {
+    method: 'PUT',
+    body: JSON.stringify({ [key]: value }),
+    keepalive: true,
+  })
+}
+
 export function cancelSync(key) {
   clearTimeout(timers[key])
 }

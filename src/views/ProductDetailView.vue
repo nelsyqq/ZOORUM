@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
-import { ShoppingBag, Check, Star, ArrowLeft, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import { ShoppingBag, Check, Star, ArrowLeft, ChevronDown, ChevronLeft, ChevronRight, Edit3, Trash2, X } from 'lucide-vue-next'
 import { useProductsStore } from '@/stores/products'
 import { useCartStore } from '@/stores/cart'
 import { useAuthStore } from '@/stores/auth'
@@ -30,6 +30,9 @@ const showReviewForm = ref(false)
 const reviewText = ref('')
 const reviewRating = ref(5)
 const submitted = ref(false)
+const editingReview = ref(null)
+const editText = ref('')
+const editRating = ref(5)
 
 const canReview = computed(() => {
   if (!auth.isAuthenticated) return false
@@ -106,6 +109,34 @@ function submitReview() {
     submitted.value = false
     showReviewForm.value = false
   }, 2000)
+}
+
+function startEdit(review) {
+  editingReview.value = review.id
+  editText.value = review.text
+  editRating.value = review.rating
+}
+
+function cancelEdit() {
+  editingReview.value = null
+  editText.value = ''
+  editRating.value = 5
+}
+
+function saveEdit() {
+  if (!editText.value.trim() || editingReview.value === null) return
+  reviewsStore.updateReview(editingReview.value, {
+    text: editText.value.trim(),
+    rating: editRating.value,
+  })
+  toast.show('Отзыв обновлён')
+  editingReview.value = null
+}
+
+function deleteOwnReview(id) {
+  if (!confirm('Удалить отзыв?')) return
+  reviewsStore.deleteReview(id)
+  toast.show('Отзыв удалён')
 }
 
 function onImgError(e) {
@@ -285,9 +316,43 @@ if (!product.value) {
                 <Star v-for="i in 5" :key="i" class="h-3.5 w-3.5" :class="i <= r.rating ? 'fill-current' : 'opacity-20'" />
               </div>
             </div>
-            <span class="text-xs text-muted">{{ r.createdAt }}</span>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-muted">{{ r.createdAt }}</span>
+              <span v-if="r.editedAt" class="text-[10px] text-muted">(ред. {{ r.editedAt }})</span>
+            </div>
           </div>
-          <p class="mt-3 text-sm leading-relaxed text-muted">{{ r.text }}</p>
+
+          <!-- Edit form -->
+          <div v-if="editingReview === r.id" class="mt-3 space-y-3">
+            <div class="flex gap-1">
+              <button v-for="i in 5" :key="i" type="button" @click="editRating = i" class="transition-colors">
+                <Star class="h-5 w-5" :class="i <= editRating ? 'fill-honey text-honey' : 'text-line'" />
+              </button>
+            </div>
+            <textarea v-model="editText" rows="3" class="input resize-none text-sm" placeholder="Измените отзыв..." />
+            <div class="flex gap-2">
+              <button class="btn-forest btn-sm" @click="saveEdit">Сохранить</button>
+              <button class="btn-sm rounded-paw border-2 border-line px-4 font-bold transition-colors hover:border-coral hover:text-coral" @click="cancelEdit">
+                <X class="h-3.5 w-3.5" />
+                Отмена
+              </button>
+            </div>
+          </div>
+
+          <!-- Review text -->
+          <p v-else class="mt-3 text-sm leading-relaxed text-muted">{{ r.text }}</p>
+
+          <!-- Edit / Delete buttons -->
+          <div v-if="auth.isAuthenticated && auth.currentUser.id === r.userId && reviewsStore.canEditReview(r.id, auth.currentUser.id) && editingReview !== r.id" class="mt-2 flex gap-2">
+            <button class="text-xs font-bold text-muted transition-colors hover:text-forest" @click="startEdit(r)">
+              <Edit3 class="mr-1 inline h-3 w-3" />
+              Редактировать
+            </button>
+            <button class="text-xs font-bold text-muted transition-colors hover:text-coral" @click="deleteOwnReview(r.id)">
+              <Trash2 class="mr-1 inline h-3 w-3" />
+              Удалить
+            </button>
+          </div>
         </div>
       </div>
 

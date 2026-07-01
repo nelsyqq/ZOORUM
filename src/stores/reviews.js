@@ -49,6 +49,26 @@ export const useReviewsStore = defineStore('reviews', () => {
     return review
   }
 
+  function canEditReview(reviewId, userId) {
+    const review = reviews.value.find(r => r.id === reviewId && r.userId === userId)
+    if (!review) return false
+    const created = new Date(review.createdAt)
+    const now = new Date()
+    const diffMs = now - created
+    const diffDays = diffMs / (1000 * 60 * 60 * 24)
+    return diffDays <= 30
+  }
+
+  function updateReview(id, { text, rating }) {
+    const review = reviews.value.find(r => r.id === id)
+    if (!review) return false
+    review.text = text
+    review.rating = rating ?? review.rating
+    review.editedAt = new Date().toISOString().split('T')[0]
+    persist()
+    return true
+  }
+
   function deleteReview(id) {
     const idx = reviews.value.findIndex(r => r.id === id)
     if (idx !== -1) {
@@ -78,7 +98,9 @@ export const useReviewsStore = defineStore('reviews', () => {
     getByProduct,
     getByUser,
     canReview,
+    canEditReview,
     addReview,
+    updateReview,
     deleteReview,
     averageRating,
     ratingCount,
