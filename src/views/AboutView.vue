@@ -3,10 +3,7 @@ import { Heart, Users, Award, Stethoscope, ArrowRight } from 'lucide-vue-next'
 import { RouterLink } from 'vue-router'
 import { SITE_IMAGES } from '@/utils/images'
 
-const stats = [
-  { value: '8+', label: 'лет с питомцами' },
-  { value: '300+', label: 'счастливых хвостов' },
-]
+
 
 const values = [
   { icon: Heart, title: 'Любовь к животным', text: 'Мы сами владельцы питомцев — наши главные консультанты.', color: 'bg-red-50 text-coral' },
@@ -35,20 +32,9 @@ const team = [
     </div>
   </section>
 
-  <!-- Stats -->
-  <section class="container-wrap py-8">
-    <div class="mx-auto grid max-w-xl grid-cols-2 gap-6">
-      <div v-for="(s, i) in stats" :key="s.label" class="rounded-blob bg-white p-6 text-center shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-fade-up" :class="`delay-${(i + 1) * 100}`">
-        <p class="font-display text-4xl font-extrabold text-forest sm:text-5xl">{{ s.value }}</p>
-        <div class="mx-auto mt-2 h-1 w-16 rounded-full bg-gradient-to-r from-forest to-forest-dark"></div>
-        <p class="mt-3 text-sm font-bold text-muted">{{ s.label }}</p>
-      </div>
-    </div>
-  </section>
-
   <!-- Story -->
-  <section class="container-wrap grid items-center gap-8 pb-12 lg:grid-cols-2">
-    <img src="https://avatars.mds.yandex.net/get-altay/13789674/2a0000019daff5e6c36ef81fccd01694292b/XXXL" alt="Зоомагазин" class="rounded-blob object-cover shadow-paw animate-slide-right" />
+  <section class="container-wrap grid items-center gap-8 pb-12 lg:grid-cols-[3fr_2fr]">
+    <img src="https://avatars.mds.yandex.net/get-altay/13789674/2a0000019daff5e6c36ef81fccd01694292b/XXXL" alt="Зоомагазин" class="w-full rounded-blob object-cover shadow-paw animate-slide-right" />
     <div class="animate-slide-left">
       <span class="inline-flex items-center gap-1.5 rounded-full bg-forest-light px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-forest-dark">Как всё начиналось</span>
       <h2 class="mt-3 font-display text-2xl font-bold text-ink sm:text-3xl">Как появился ЗООРУМ</h2>
