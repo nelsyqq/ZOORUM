@@ -1,14 +1,13 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { LayoutDashboard, ShoppingBag, Package, Users, MessageSquare, Plus, Pencil, Trash2, X, Save, TrendingUp, DollarSign, Archive, Star, Download, Upload } from 'lucide-vue-next'
+import { LayoutDashboard, ShoppingBag, Package, Users, MessageSquare, Plus, Pencil, Trash2, X, Save, TrendingUp, DollarSign, Archive, Star, Download, Upload, Shield } from 'lucide-vue-next'
 import { useProductsStore } from '@/stores/products'
 import { useOrdersStore } from '@/stores/orders'
 import { useAuthStore } from '@/stores/auth'
 import { useFeedbackStore } from '@/stores/feedback'
 import { useReviewsStore } from '@/stores/reviews'
 import { CATEGORIES, formatPrice, formatDate, getCategoryLabel } from '@/utils/helpers'
-import { SITE_IMAGES } from '@/utils/images'
 
 const productsStore = useProductsStore()
 const ordersStore = useOrdersStore()
@@ -246,8 +245,10 @@ const tabs = [
 
 <template>
   <div class="container-wrap py-10 animate-fade-up">
-    <div class="mb-8 flex items-center gap-6">
-      <img :src="SITE_IMAGES.pets.dogs" alt="Админ" class="h-20 w-20 rounded-2xl object-cover shadow-soft" />
+    <div class="mb-8 flex items-center gap-5">
+      <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-forest to-forest-dark shadow-soft">
+        <Shield class="h-7 w-7 text-white" />
+      </div>
       <div>
         <h1 class="font-display text-3xl font-extrabold">Админ-панель</h1>
         <p class="mt-1 text-muted">Управление магазином ЗООРУМ</p>
