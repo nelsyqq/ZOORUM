@@ -95,7 +95,7 @@ const perks = [
         <h2 class="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">Хиты для хвостиков</h2>
         <p class="mt-1 text-sm text-muted">Самое популярное у наших покупателей</p>
       </div>
-      <div class="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+      <div class="grid grid-cols-2 gap-3 md:grid-cols-4 lg:gap-4">
         <ProductCard
           v-for="(product, i) in products.featuredProducts"
           :key="product.id"

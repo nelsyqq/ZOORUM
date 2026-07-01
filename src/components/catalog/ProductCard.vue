@@ -56,27 +56,27 @@ function onImgError(e) {
       </div>
     </RouterLink>
 
-    <div class="p-4">
-      <p class="mb-1 text-xs font-extrabold uppercase tracking-wider text-muted">
+    <div class="p-3 sm:p-4">
+      <p class="mb-1 text-[10px] font-extrabold uppercase tracking-wider text-muted sm:text-xs">
         {{ getCategoryLabel(product.category) }}
       </p>
       <RouterLink :to="`/product/${product.id}`" class="block">
-        <h3 class="mb-3 font-bold leading-snug text-ink line-clamp-2 transition-colors hover:text-forest">{{ product.name }}</h3>
+        <h3 class="mb-2 text-sm font-bold leading-snug text-ink line-clamp-2 transition-colors hover:text-forest sm:mb-3 sm:text-base">{{ product.name }}</h3>
       </RouterLink>
-      <div class="flex items-center justify-between gap-2">
+      <div class="flex items-center justify-between gap-1 sm:gap-2">
         <div class="flex flex-col">
-          <span v-if="product.oldPrice" class="text-sm text-muted line-through">{{ formatPrice(product.oldPrice) }}</span>
-          <span v-if="product.weights?.length" class="font-display text-lg font-bold text-forest">от {{ formatPrice(product.price) }}</span>
-          <span v-else class="font-display text-xl font-bold" :class="product.oldPrice ? 'text-coral' : 'text-forest'">{{ formatPrice(product.price) }}</span>
+          <span v-if="product.oldPrice" class="text-[11px] text-muted line-through sm:text-sm">{{ formatPrice(product.oldPrice) }}</span>
+          <span v-if="product.weights?.length" class="font-display text-base font-bold text-forest sm:text-lg">от {{ formatPrice(product.price) }}</span>
+          <span v-else class="font-display text-lg font-bold sm:text-xl" :class="product.oldPrice ? 'text-coral' : 'text-forest'">{{ formatPrice(product.price) }}</span>
         </div>
         <button
-          class="btn-forest btn-sm !rounded-full !px-3 transition-all duration-200 active:scale-90"
+          class="btn-forest btn-sm !min-h-[32px] !min-w-[32px] !rounded-full !px-2 sm:!px-3 transition-all duration-200 active:scale-90"
           :class="{ '!bg-honey !text-ink !scale-110': justAdded }"
           :disabled="product.stock <= 0"
           @click="addToCart"
         >
-          <Check v-if="justAdded" class="h-3.5 w-3.5" />
-          <ShoppingBag v-else class="h-3.5 w-3.5" />
+          <Check v-if="justAdded" class="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+          <ShoppingBag v-else class="h-3 w-3 sm:h-3.5 sm:w-3.5" />
         </button>
       </div>
     </div>

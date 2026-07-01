@@ -160,7 +160,7 @@ function resetFilters() {
         <button v-if="search" class="tag-honey" @click="search = ''">«{{ search }}» <X class="ml-1 inline h-3 w-3" /></button>
       </div>
 
-      <div v-if="filteredProducts.length" class="grid grid-cols-2 gap-4 xl:grid-cols-3">
+      <div v-if="filteredProducts.length" class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-3">
         <ProductCard v-for="(product, i) in filteredProducts" :key="product.id" :product="product" :style="{ animationDelay: `${(i % 6) * 80}ms` }" class="animate-fade-up" />
       </div>
 
