@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
+import { ImagePlus } from 'lucide-vue-next'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { Package, LogOut, Save, LogIn, UserPlus, User, Phone, Mail, MapPin, ShoppingBag, Clock, Calendar, CreditCard, ShieldCheck } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/auth'
@@ -28,6 +29,7 @@ const profileTab = ref('profile')
 const loginForm = reactive({ email: '', password: '' })
 const registerForm = reactive({ name: '', email: '', phone: '', password: '', confirm: '' })
 const profileForm = reactive({ name: '', phone: '', email: '', address: '' })
+const avatarPreview = ref('')
 
 const errors = reactive({})
 const message = ref('')
@@ -141,6 +143,27 @@ function onPhoneInput(e, form) {
   form.phone = formatPhoneInput(e.target.value)
 }
 
+function onAvatarUpload(e) {
+  const file = e.target.files?.[0]
+  if (!file) return
+  const img = new Image()
+  img.onload = () => {
+    const canvas = document.createElement('canvas')
+    const size = 200
+    canvas.width = size
+    canvas.height = size
+    const ctx = canvas.getContext('2d')
+    const s = Math.min(img.width, img.height)
+    const sx = (img.width - s) / 2
+    const sy = (img.height - s) / 2
+    ctx.drawImage(img, sx, sy, s, s, 0, 0, size, size)
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.7)
+    avatarPreview.value = dataUrl
+    auth.updateAvatar(auth.currentUser.id, dataUrl)
+  }
+  img.src = URL.createObjectURL(file)
+}
+
 function logout() {
   auth.logout()
   activeTab.value = 'login'
@@ -236,8 +259,9 @@ const statusColors = {
       <div class="grid items-start gap-6 lg:grid-cols-[280px_1fr]">
         <aside class="rounded-blob bg-white p-6 shadow-soft">
           <div class="flex items-center gap-4 border-b border-line pb-5">
-            <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-forest to-forest-dark text-xl font-extrabold text-white shadow-soft">
-              {{ auth.currentUser.name[0] }}
+            <div class="h-14 w-14 shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-forest to-forest-dark shadow-soft">
+              <img v-if="auth.currentUser.avatar" :src="auth.currentUser.avatar" alt="Avatar" class="h-full w-full object-cover" />
+              <span v-else class="flex h-full w-full items-center justify-center text-xl font-extrabold text-white">{{ auth.currentUser.name[0] }}</span>
             </div>
             <div class="min-w-0">
               <strong class="block truncate text-base">{{ auth.currentUser.name }}</strong>
@@ -268,7 +292,20 @@ const statusColors = {
                 <p class="text-xs text-muted">Личная информация и контакты</p>
               </div>
             </div>
-            <div class="mt-6 grid gap-5 sm:grid-cols-2">
+            <div class="mt-6 mb-5 flex items-center gap-4">
+              <div class="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl bg-forest-light">
+                <img v-if="auth.currentUser.avatar" :src="auth.currentUser.avatar" alt="Avatar" class="h-full w-full object-cover" />
+                <span v-else class="flex h-full w-full items-center justify-center text-xl font-bold text-forest">{{ auth.currentUser.name[0] }}</span>
+              </div>
+              <div>
+                <label class="btn-forest btn-sm inline-flex cursor-pointer"><ImagePlus class="h-4 w-4" /> Загрузить фото
+                  <input type="file" accept="image/jpeg,image/png,image/webp" class="hidden" @change="onAvatarUpload" />
+                </label>
+                <p class="mt-1 text-xs text-muted">JPEG, PNG, WebP до 200x200px</p>
+              </div>
+            </div>
+
+            <div class="grid gap-5 sm:grid-cols-2">
               <div>
                 <label class="label flex items-center gap-1.5"><User class="h-3.5 w-3.5 text-muted" /> Имя</label>
                 <input v-model="profileForm.name" class="input" />

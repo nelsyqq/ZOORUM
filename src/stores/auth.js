@@ -13,6 +13,7 @@ const defaultUsers = [
     role: 'admin',
     address: 'г. Москва, ул. Пушкина, д. 10',
     createdAt: '2024-01-15',
+    avatar: null,
   },
   {
     id: 2,
@@ -23,6 +24,7 @@ const defaultUsers = [
     role: 'user',
     address: 'г. Москва, ул. Лесная, д. 5, кв. 12',
     createdAt: '2024-06-20',
+    avatar: null,
   },
 ]
 
@@ -75,12 +77,33 @@ export const useAuthStore = defineStore('auth', () => {
       phone,
       role: 'user',
       address: '',
+      avatar: null,
       createdAt: new Date().toISOString().split('T')[0],
     }
     users.value.push(newUser)
     currentUser.value = sanitizeUser(newUser)
     persist()
     return { success: true }
+  }
+
+  function updateAvatar(userId, avatarBase64) {
+    const user = users.value.find((u) => u.id === userId)
+    if (!user) return false
+    user.avatar = avatarBase64
+    if (currentUser.value?.id === userId) {
+      currentUser.value.avatar = avatarBase64
+    }
+    persist()
+    return true
+  }
+
+  function getUser(id) {
+    return users.value.find((u) => u.id === id)
+  }
+
+  function getAvatar(userId) {
+    const user = users.value.find((u) => u.id === userId)
+    return user?.avatar || null
   }
 
   function logout() {
@@ -141,6 +164,9 @@ export const useAuthStore = defineStore('auth', () => {
     register,
     logout,
     updateProfile,
+    updateAvatar,
+    getUser,
+    getAvatar,
     deleteUser,
     updateUserRole,
     fromCloud,

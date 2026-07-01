@@ -139,6 +139,10 @@ function deleteOwnReview(id) {
   toast.show('Отзыв удалён')
 }
 
+function userAvatar(userId) {
+  return auth.getAvatar(userId)
+}
+
 function onImgError(e) {
   e.target.src = '/images/placeholder.jpg'
 }
@@ -310,10 +314,16 @@ if (!product.value) {
       <div v-if="reviews.length" class="space-y-4">
         <div v-for="r in reviews" :key="r.id" class="panel transition-all duration-200 hover:-translate-y-1 hover:shadow-paw">
           <div class="flex items-start justify-between">
-            <div>
-              <p class="font-bold">{{ r.userName }}</p>
-              <div class="mt-0.5 flex text-honey">
-                <Star v-for="i in 5" :key="i" class="h-3.5 w-3.5" :class="i <= r.rating ? 'fill-current' : 'opacity-20'" />
+            <div class="flex items-center gap-3">
+              <div class="h-9 w-9 shrink-0 overflow-hidden rounded-full bg-forest-light">
+                <img v-if="userAvatar(r.userId)" :src="userAvatar(r.userId)" alt="" class="h-full w-full object-cover" />
+                <span v-else class="flex h-full w-full items-center justify-center text-sm font-bold text-forest">{{ r.userName[0] }}</span>
+              </div>
+              <div>
+                <p class="font-bold">{{ r.userName }}</p>
+                <div class="mt-0.5 flex text-honey">
+                  <Star v-for="i in 5" :key="i" class="h-3.5 w-3.5" :class="i <= r.rating ? 'fill-current' : 'opacity-20'" />
+                </div>
               </div>
             </div>
             <div class="flex items-center gap-2">
