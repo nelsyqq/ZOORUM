@@ -125,7 +125,7 @@ const perks = [
         </div>
       </RouterLink>
       <RouterLink to="/profile" class="group relative overflow-hidden rounded-blob shadow-soft">
-        <img :src="SITE_IMAGES.promo.gift" alt="Подарок" class="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        <img src="https://i.ibb.co/Q3dcBQqd/0d7d61c4-b5d6-4216-b698-a2d32c6b2634.png" alt="Подарок" class="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
         <div class="absolute inset-0 bg-gradient-to-t from-forest-dark/90 via-forest-dark/20 to-transparent flex flex-col justify-end p-6 sm:p-8">
           <span class="inline-flex w-fit items-center gap-1 rounded-full bg-white/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase text-white backdrop-blur-sm">Новичкам</span>
           <h3 class="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">Игрушка в подарок</h3>
