@@ -1,12 +1,11 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
-import { ShoppingBag, Menu, X, Search, Shield } from 'lucide-vue-next'
+import { ShoppingBag, Menu, X, Search, Shield, User } from 'lucide-vue-next'
 import { useCartStore } from '@/stores/cart'
 import { useAuthStore } from '@/stores/auth'
 import { useProductsStore } from '@/stores/products'
 import { CATEGORIES } from '@/utils/helpers'
-import { SITE_IMAGES } from '@/utils/images'
 
 const route = useRoute()
 const router = useRouter()
@@ -126,10 +125,11 @@ function onSearchBlur() {
 
         <RouterLink
           to="/profile"
-          class="hidden rounded-paw bg-honey px-4 py-2.5 text-sm font-extrabold text-ink transition-colors hover:bg-honey-dark sm:inline-flex"
+          class="hidden rounded-paw bg-honey px-3 py-2 text-sm font-extrabold text-ink transition-colors hover:bg-honey-dark sm:inline-flex sm:items-center sm:gap-1.5"
         >
-          <img v-if="auth.isAuthenticated" :src="SITE_IMAGES.pets.dogs" alt="Avatar" class="mr-2 h-5 w-5 rounded-full object-cover" />
-          {{ auth.isAuthenticated ? `${auth.userName.split(' ')[0]}` : 'Войти' }}
+          <User v-if="auth.isAuthenticated" class="h-4 w-4 shrink-0" />
+          <span v-if="auth.isAuthenticated" class="max-w-[120px] truncate">{{ auth.userName.split(' ')[0] }}</span>
+          <span v-else>Войти</span>
         </RouterLink>
       </div>
     </div>
