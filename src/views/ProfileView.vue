@@ -15,7 +15,6 @@ import {
   formatPrice,
   formatDate,
 } from '@/utils/helpers'
-import { SITE_IMAGES } from '@/utils/images'
 
 const route = useRoute()
 const router = useRouter()
@@ -182,8 +181,10 @@ const statusColors = {
 
 <template>
   <div class="container-wrap py-10">
-    <div class="mb-8 flex items-center gap-6">
-      <img :src="SITE_IMAGES.pets.cats" alt="Профиль" class="h-20 w-20 rounded-2xl object-cover shadow-soft" />
+    <div class="mb-8 flex items-center gap-5">
+      <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-forest to-forest-dark shadow-soft">
+        <User class="h-7 w-7 text-white" />
+      </div>
       <div>
         <h1 class="font-display text-3xl font-extrabold">Личный кабинет</h1>
         <p class="mt-1 text-muted">Управление вашим аккаунтом и заказами</p>
@@ -194,40 +195,45 @@ const statusColors = {
 
     <!-- Auth -->
     <div v-if="!auth.isAuthenticated" class="mx-auto mt-8 max-w-md">
-      <div class="mb-6 flex justify-center">
-        <img :src="SITE_IMAGES.hero.puppy" alt="Вход" class="h-32 w-32 rounded-2xl object-cover shadow-soft" />
-      </div>
-      <div class="flex gap-1 rounded-full bg-forest-light p-1">
-        <button class="flex flex-1 items-center justify-center gap-2 rounded-full py-2.5 text-sm font-bold" :class="activeTab === 'login' ? 'bg-white shadow-sm' : 'text-muted'" @click="activeTab = 'login'">
-          <LogIn class="h-4 w-4" /> Вход
-        </button>
-        <button class="flex flex-1 items-center justify-center gap-2 rounded-full py-2.5 text-sm font-bold" :class="activeTab === 'register' ? 'bg-white shadow-sm' : 'text-muted'" @click="activeTab = 'register'">
-          <UserPlus class="h-4 w-4" /> Регистрация
-        </button>
-      </div>
-
-        <form v-if="activeTab === 'login'" class="panel mt-6" @submit.prevent="handleLogin">
-          <h2 class="font-display text-2xl font-extrabold">Вход</h2>
-        <div class="mt-5 space-y-4">
-          <div><label class="label">Email</label><input v-model="loginForm.email" type="email" class="input" :class="{ 'input-error': errors.email }" /><p v-if="errors.email" class="error-text">{{ errors.email }}</p></div>
-          <div><label class="label">Пароль</label><input v-model="loginForm.password" type="password" class="input" :class="{ 'input-error': errors.password }" /><p v-if="errors.password" class="error-text">{{ errors.password }}</p></div>
-        </div>
-        <button type="submit" class="btn-forest btn-block mt-6">Войти</button>
-      </form>
-
-      <form v-else class="panel mt-6" @submit.prevent="handleRegister">
-        <h2 class="font-display text-2xl font-extrabold">Регистрация</h2>
-        <div class="mt-5 space-y-4">
-          <div><label class="label">Имя</label><input v-model="registerForm.name" class="input" :class="{ 'input-error': errors.name }" /><p v-if="errors.name" class="error-text">{{ errors.name }}</p></div>
-          <div><label class="label">Email</label><input v-model="registerForm.email" type="email" class="input" :class="{ 'input-error': errors.email }" /><p v-if="errors.email" class="error-text">{{ errors.email }}</p></div>
-          <div><label class="label">Телефон</label><input :value="registerForm.phone" type="tel" class="input" placeholder="+7 (___) ___-__-__" @input="onPhoneInput($event, registerForm)" /><p v-if="errors.phone" class="error-text">{{ errors.phone }}</p></div>
-          <div class="grid gap-4 sm:grid-cols-2">
-            <div><label class="label">Пароль</label><input v-model="registerForm.password" type="password" class="input" /><p v-if="errors.password" class="error-text">{{ errors.password }}</p></div>
-            <div><label class="label">Подтверждение</label><input v-model="registerForm.confirm" type="password" class="input" /><p v-if="errors.confirm" class="error-text">{{ errors.confirm }}</p></div>
+      <div class="rounded-blob bg-white p-8 shadow-soft sm:p-10">
+        <div class="mb-6 text-center">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-forest-light to-forest shadow-soft">
+            <LogIn v-if="activeTab === 'login'" class="h-7 w-7 text-white" />
+            <UserPlus v-else class="h-7 w-7 text-white" />
           </div>
+          <h2 class="mt-4 font-display text-2xl font-extrabold">{{ activeTab === 'login' ? 'Добро пожаловать' : 'Создать аккаунт' }}</h2>
+          <p class="mt-1 text-sm text-muted">{{ activeTab === 'login' ? 'Войдите, чтобы продолжить' : 'Зарегистрируйтесь для покупок' }}</p>
         </div>
-        <button type="submit" class="btn-forest btn-block mt-6">Зарегистрироваться</button>
-      </form>
+        <div class="flex gap-1 rounded-full bg-forest-light p-1">
+          <button class="flex flex-1 items-center justify-center gap-2 rounded-full py-2.5 text-sm font-bold transition-all" :class="activeTab === 'login' ? 'bg-white shadow-sm' : 'text-muted hover:text-ink'" @click="activeTab = 'login'">
+            Вход
+          </button>
+          <button class="flex flex-1 items-center justify-center gap-2 rounded-full py-2.5 text-sm font-bold transition-all" :class="activeTab === 'register' ? 'bg-white shadow-sm' : 'text-muted hover:text-ink'" @click="activeTab = 'register'">
+            Регистрация
+          </button>
+        </div>
+
+        <form v-if="activeTab === 'login'" class="mt-6" @submit.prevent="handleLogin">
+          <div class="space-y-4">
+            <div><label class="label">Email</label><input v-model="loginForm.email" type="email" class="input" :class="{ 'input-error': errors.email }" placeholder="your@email.com" /><p v-if="errors.email" class="error-text">{{ errors.email }}</p></div>
+            <div><label class="label">Пароль</label><input v-model="loginForm.password" type="password" class="input" :class="{ 'input-error': errors.password }" placeholder="• • • • • • • •" /><p v-if="errors.password" class="error-text">{{ errors.password }}</p></div>
+          </div>
+          <button type="submit" class="btn-forest btn-block mt-6">Войти</button>
+        </form>
+
+        <form v-else class="mt-6" @submit.prevent="handleRegister">
+          <div class="space-y-4">
+            <div><label class="label">Имя</label><input v-model="registerForm.name" class="input" :class="{ 'input-error': errors.name }" placeholder="Иван Иванов" /><p v-if="errors.name" class="error-text">{{ errors.name }}</p></div>
+            <div><label class="label">Email</label><input v-model="registerForm.email" type="email" class="input" :class="{ 'input-error': errors.email }" placeholder="your@email.com" /><p v-if="errors.email" class="error-text">{{ errors.email }}</p></div>
+            <div><label class="label">Телефон</label><input :value="registerForm.phone" type="tel" class="input" placeholder="+7 (___) ___-__-__" @input="onPhoneInput($event, registerForm)" /><p v-if="errors.phone" class="error-text">{{ errors.phone }}</p></div>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div><label class="label">Пароль</label><input v-model="registerForm.password" type="password" class="input" placeholder="• • • • • • • •" /><p v-if="errors.password" class="error-text">{{ errors.password }}</p></div>
+              <div><label class="label">Подтверждение</label><input v-model="registerForm.confirm" type="password" class="input" placeholder="• • • • • • • •" /><p v-if="errors.confirm" class="error-text">{{ errors.confirm }}</p></div>
+            </div>
+          </div>
+          <button type="submit" class="btn-forest btn-block mt-6">Зарегистрироваться</button>
+        </form>
+      </div>
     </div>
 
     <!-- Account -->
