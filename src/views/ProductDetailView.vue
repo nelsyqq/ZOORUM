@@ -34,12 +34,16 @@ const editingReview = ref(null)
 const editText = ref('')
 const editRating = ref(5)
 
+const alreadyReviewed = computed(() => {
+  if (!auth.isAuthenticated || !product.value) return false
+  return reviewsStore.reviews.some(r => r.productId === product.value.id && r.userId === auth.currentUser.id)
+})
+
 const canReview = computed(() => {
-  if (!auth.isAuthenticated) return false
-  const userId = auth.currentUser.id
-  const userOrders = ordersStore.getByUserId(userId)
-  const boughtProduct = userOrders.some(o => o.items.some(i => i.productId === product.value?.id))
-  return boughtProduct && reviewsStore.canReview(product.value?.id, userId)
+  if (!auth.isAuthenticated || !product.value) return false
+  const userOrders = ordersStore.getByUserId(auth.currentUser.id)
+  const boughtProduct = userOrders.some(o => o.items.some(i => i.productId === product.value.id))
+  return boughtProduct && !alreadyReviewed.value
 })
 
 const categoryImage = computed(() => {
@@ -279,7 +283,7 @@ if (!product.value) {
         <button v-if="canReview" class="btn-forest" @click="showReviewForm = !showReviewForm">
           Написать отзыв
         </button>
-        <div v-else-if="auth.isAuthenticated && !canReview && !reviewsStore.canReview(product.id, auth.currentUser?.id)" class="text-sm text-muted">
+        <div v-else-if="alreadyReviewed" class="text-sm text-muted">
           Вы уже оставили отзыв на этот товар
         </div>
       </div>

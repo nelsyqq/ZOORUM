@@ -89,8 +89,10 @@ export const useReviewsStore = defineStore('reviews', () => {
 
   function fromCloud(data) {
     if (!data) return
-    reviews.value = data.reviews ?? []
-    if (data.nextId) nextId = data.nextId
+    const cloudIds = new Set((data.reviews ?? []).map(r => r.id))
+    const localOnly = reviews.value.filter(r => !cloudIds.has(r.id))
+    reviews.value = [...localOnly, ...(data.reviews ?? [])]
+    if (data.nextId && data.nextId > nextId) nextId = data.nextId
   }
 
   return {
