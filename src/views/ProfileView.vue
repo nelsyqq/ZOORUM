@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
-import { Package, LogOut, Save, LogIn, UserPlus } from 'lucide-vue-next'
+import { Package, LogOut, Save, LogIn, UserPlus, User, Phone, Mail, MapPin, ShoppingBag, Clock, Calendar, CreditCard, ShieldCheck } from 'lucide-vue-next'
 import { useAuthStore } from '@/stores/auth'
 import { useCartStore } from '@/stores/cart'
 import { useOrdersStore } from '@/stores/orders'
@@ -34,6 +34,18 @@ const message = ref('')
 
 const userOrders = computed(() =>
   auth.currentUser ? ordersStore.getByUserId(auth.currentUser.id) : []
+)
+
+const totalSpent = computed(() =>
+  userOrders.value.reduce((sum, o) => sum + (o.total || 0), 0)
+)
+
+const completedOrders = computed(() =>
+  userOrders.value.filter(o => o.status === 'delivered').length
+)
+
+const activeOrders = computed(() =>
+  userOrders.value.filter(o => o.status === 'new' || o.status === 'processing' || o.status === 'shipped').length
 )
 
 onMounted(() => {
@@ -196,60 +208,122 @@ const statusColors = {
     </div>
 
     <!-- Account -->
-    <div v-else class="mt-8 grid items-start gap-6 lg:grid-cols-[260px_1fr]">
-      <aside class="panel sticky top-[90px] !p-5">
-        <div class="flex items-center gap-3 border-b border-line pb-4">
-          <div class="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-accent to-accent-dark font-extrabold text-white">
-            {{ auth.currentUser.name[0] }}
-          </div>
-          <div>
-            <strong class="block text-sm">{{ auth.currentUser.name }}</strong>
-            <span class="text-xs text-muted">{{ auth.currentUser.email }}</span>
-          </div>
+    <div v-else class="mt-8">
+      <!-- Stats cards -->
+      <div class="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div class="rounded-blob bg-gradient-to-br from-forest-light to-white p-4 text-center shadow-soft">
+          <ShoppingBag class="mx-auto h-5 w-5 text-forest" />
+          <p class="mt-2 text-2xl font-bold text-ink">{{ userOrders.length }}</p>
+          <p class="text-xs text-muted">Всего заказов</p>
         </div>
-        <nav class="mt-3 flex flex-col">
-          <button class="rounded-[9px] px-3 py-2.5 text-left text-sm font-semibold" :class="profileTab === 'profile' ? 'bg-ink text-white' : 'hover:bg-forest-light'" @click="profileTab = 'profile'">Профиль</button>
-          <button class="rounded-[9px] px-3 py-2.5 text-left text-sm font-semibold" :class="profileTab === 'orders' ? 'bg-ink text-white' : 'hover:bg-forest-light'" @click="profileTab = 'orders'">
-            Заказы <em v-if="userOrders.length" class="ml-1 rounded-full bg-coral px-2 text-xs not-italic text-white">{{ userOrders.length }}</em>
-          </button>
-        </nav>
-        <button class="btn-ghost btn-sm btn-block mt-4" @click="logout"><LogOut class="h-4 w-4" /> Выйти</button>
-      </aside>
+        <div class="rounded-blob bg-gradient-to-br from-honey-light to-white p-4 text-center shadow-soft">
+          <Clock class="mx-auto h-5 w-5 text-honey-dark" />
+          <p class="mt-2 text-2xl font-bold text-ink">{{ activeOrders }}</p>
+          <p class="text-xs text-muted">В обработке</p>
+        </div>
+        <div class="rounded-blob bg-gradient-to-br from-green-50 to-white p-4 text-center shadow-soft">
+          <ShieldCheck class="mx-auto h-5 w-5 text-green-600" />
+          <p class="mt-2 text-2xl font-bold text-ink">{{ completedOrders }}</p>
+          <p class="text-xs text-muted">Доставлено</p>
+        </div>
+        <div class="rounded-blob bg-gradient-to-br from-sky-light to-white p-4 text-center shadow-soft">
+          <CreditCard class="mx-auto h-5 w-5 text-sky" />
+          <p class="mt-2 text-2xl font-bold text-ink">{{ formatPrice(totalSpent) }}</p>
+          <p class="text-xs text-muted">Потрачено</p>
+        </div>
+      </div>
 
-      <form v-if="profileTab === 'profile'" class="panel" @submit.prevent="handleProfileUpdate">
-        <h2 class="font-display text-xl font-bold">Мои данные</h2>
-        <div class="mt-5 max-w-md space-y-4">
-          <div><label class="label">Имя</label><input v-model="profileForm.name" class="input" /></div>
-          <div><label class="label">Телефон</label><input :value="profileForm.phone" type="tel" class="input" @input="onPhoneInput($event, profileForm)" /></div>
-          <div><label class="label">Email</label><input v-model="profileForm.email" type="email" class="input" /></div>
-          <div><label class="label">Адрес доставки</label><textarea v-model="profileForm.address" rows="2" class="input resize-none" placeholder="Для быстрого оформления заказов" /></div>
-        </div>
-        <button type="submit" class="btn-forest mt-6"><Save class="h-4 w-4" /> Сохранить</button>
-      </form>
-
-      <div v-else class="space-y-4">
-        <div v-if="!userOrders.length" class="panel py-16 text-center">
-          <Package class="mx-auto h-12 w-12 text-line" />
-          <p class="mt-4 font-semibold">Заказов пока нет</p>
-          <RouterLink to="/catalog" class="btn-forest mt-6 inline-flex">В каталог</RouterLink>
-        </div>
-        <div v-for="order in userOrders" :key="order.id" class="panel">
-          <div class="flex flex-wrap justify-between gap-3">
-            <div><p class="font-bold">Заказ #{{ order.id }}</p><p class="text-sm text-muted">{{ formatDate(order.createdAt) }}</p></div>
-            <span class="rounded-full px-3 py-1 text-xs font-bold" :class="statusColors[order.status]">{{ ordersStore.statusLabels[order.status] }}</span>
+      <div class="grid items-start gap-6 lg:grid-cols-[280px_1fr]">
+        <aside class="rounded-blob bg-white p-6 shadow-soft">
+          <div class="flex items-center gap-4 border-b border-line pb-5">
+            <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-forest to-forest-dark text-xl font-extrabold text-white shadow-soft">
+              {{ auth.currentUser.name[0] }}
+            </div>
+            <div class="min-w-0">
+              <strong class="block truncate text-base">{{ auth.currentUser.name }}</strong>
+              <span class="truncate text-xs text-muted">{{ auth.currentUser.email }}</span>
+              <span class="mt-0.5 block text-[10px] text-muted"><Calendar class="mr-0.5 inline h-3 w-3" /> С {{ formatDate(auth.currentUser.createdAt) }}</span>
+            </div>
           </div>
-          <ul class="mt-4 space-y-3 border-t border-line pt-4 text-sm">
-            <li v-for="item in order.items" :key="item.productId" class="flex items-center gap-3">
-              <img :src="item.image" :alt="item.name" class="h-12 w-12 rounded-lg object-cover" />
-              <div class="flex-1">
-                <span class="font-medium">{{ item.name }}</span>
-                <span class="text-muted"> × {{ item.quantity }}</span>
+          <nav class="mt-4 flex flex-col gap-1">
+            <button class="flex items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-bold transition-all" :class="profileTab === 'profile' ? 'bg-forest-light text-forest-dark' : 'text-muted hover:bg-forest-light/50 hover:text-ink'" @click="profileTab = 'profile'">
+              <User class="h-4 w-4" /> Профиль
+            </button>
+            <button class="flex items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-bold transition-all" :class="profileTab === 'orders' ? 'bg-forest-light text-forest-dark' : 'text-muted hover:bg-forest-light/50 hover:text-ink'" @click="profileTab = 'orders'">
+              <Package class="h-4 w-4" /> Заказы
+              <em v-if="userOrders.length" class="ml-auto rounded-full bg-coral px-2 py-0.5 text-xs not-italic text-white">{{ userOrders.length }}</em>
+            </button>
+          </nav>
+          <button class="btn-ghost btn-block mt-6 !rounded-xl" @click="logout"><LogOut class="h-4 w-4" /> Выйти</button>
+        </aside>
+
+        <div v-if="profileTab === 'profile'">
+          <form class="rounded-blob bg-white p-6 shadow-soft sm:p-8" @submit.prevent="handleProfileUpdate">
+            <div class="flex items-center gap-3 border-b border-line pb-5">
+              <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-forest-light">
+                <User class="h-5 w-5 text-forest" />
               </div>
-              <span class="font-semibold">{{ formatPrice(item.price * item.quantity) }}</span>
-            </li>
-          </ul>
-          <div class="mt-3 flex justify-between border-t border-line pt-3 font-bold">
-            <span>Итого</span><span class="text-forest">{{ formatPrice(order.total) }}</span>
+              <div>
+                <h2 class="font-display text-lg font-bold">Мои данные</h2>
+                <p class="text-xs text-muted">Личная информация и контакты</p>
+              </div>
+            </div>
+            <div class="mt-6 grid gap-5 sm:grid-cols-2">
+              <div>
+                <label class="label flex items-center gap-1.5"><User class="h-3.5 w-3.5 text-muted" /> Имя</label>
+                <input v-model="profileForm.name" class="input" />
+              </div>
+              <div>
+                <label class="label flex items-center gap-1.5"><Mail class="h-3.5 w-3.5 text-muted" /> Email</label>
+                <input v-model="profileForm.email" type="email" class="input" />
+              </div>
+              <div>
+                <label class="label flex items-center gap-1.5"><Phone class="h-3.5 w-3.5 text-muted" /> Телефон</label>
+                <input :value="profileForm.phone" type="tel" class="input" @input="onPhoneInput($event, profileForm)" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="label flex items-center gap-1.5"><MapPin class="h-3.5 w-3.5 text-muted" /> Адрес доставки</label>
+                <textarea v-model="profileForm.address" rows="2" class="input resize-none" placeholder="Для быстрого оформления заказов" />
+              </div>
+            </div>
+            <button type="submit" class="btn-forest mt-6"><Save class="h-4 w-4" /> Сохранить изменения</button>
+          </form>
+        </div>
+
+        <div v-else class="space-y-4">
+          <div v-if="!userOrders.length" class="rounded-blob bg-white py-16 text-center shadow-soft">
+            <Package class="mx-auto h-14 w-14 text-line" />
+            <p class="mt-4 font-display text-xl font-bold">Заказов пока нет</p>
+            <p class="mt-1 text-sm text-muted">Перейдите в каталог и выберите товары</p>
+            <RouterLink to="/catalog" class="btn-forest mt-6 inline-flex">В каталог</RouterLink>
+          </div>
+          <div v-for="order in userOrders" :key="order.id" class="rounded-blob bg-white p-6 shadow-soft transition-all duration-200 hover:-translate-y-1 hover:shadow-paw">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-forest-light">
+                  <Package class="h-5 w-5 text-forest" />
+                </div>
+                <div>
+                  <p class="font-bold">Заказ #{{ order.id }}</p>
+                  <p class="text-xs text-muted">{{ formatDate(order.createdAt) }}</p>
+                </div>
+              </div>
+              <span class="rounded-full px-3 py-1 text-xs font-bold" :class="statusColors[order.status]">{{ ordersStore.statusLabels[order.status] }}</span>
+            </div>
+            <ul class="mt-4 space-y-3 border-t border-line pt-4 text-sm">
+              <li v-for="item in order.items" :key="item.productId" class="flex items-center gap-3">
+                <img :src="item.image || '/images/placeholder.jpg'" :alt="item.name" class="h-12 w-12 rounded-xl object-cover" />
+                <div class="flex-1">
+                  <span class="font-medium">{{ item.name }}</span>
+                  <span class="text-muted"> × {{ item.quantity }}</span>
+                </div>
+                <span class="font-semibold">{{ formatPrice(item.price * item.quantity) }}</span>
+              </li>
+            </ul>
+            <div class="mt-4 flex items-center justify-between border-t border-line pt-4">
+              <span class="font-bold text-muted">{{ order.items.length }} {{ order.items.length === 1 ? 'товар' : 'товара' }}</span>
+              <span class="font-display text-xl font-bold text-forest">{{ formatPrice(order.total) }}</span>
+            </div>
           </div>
         </div>
       </div>

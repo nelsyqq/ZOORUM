@@ -84,7 +84,7 @@ function toggle() {
 
         <div class="relative w-full max-w-lg animate-slide-up rounded-t-3xl bg-white p-6 shadow-modal sm:rounded-3xl sm:p-8">
           <button
-            class="absolute right-4 top-4 rounded-lg p-1.5 text-stone-400 transition-colors hover:bg-stone-100 hover:text-stone-600 sm:hidden"
+            class="absolute right-4 top-4 rounded-lg p-1.5 text-stone-400 transition-colors hover:bg-stone-100 hover:text-stone-600"
             @click="toggle"
           >
             <X class="h-5 w-5" />
