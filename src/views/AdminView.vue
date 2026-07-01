@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { LayoutDashboard, ShoppingBag, Package, Users, MessageSquare, Plus, Pencil, Trash2, X, Save, TrendingUp, DollarSign, Archive, Star } from 'lucide-vue-next'
+import { LayoutDashboard, ShoppingBag, Package, Users, MessageSquare, Plus, Pencil, Trash2, X, Save, TrendingUp, DollarSign, Archive, Star, Download, Upload } from 'lucide-vue-next'
 import { useProductsStore } from '@/stores/products'
 import { useOrdersStore } from '@/stores/orders'
 import { useAuthStore } from '@/stores/auth'
@@ -190,6 +190,49 @@ function removeWeight(index) {
   productForm.weights.splice(index, 1)
 }
 
+const importStatus = ref('')
+
+function exportData() {
+  const data = {
+    exportedAt: new Date().toISOString(),
+    products: productsStore.products,
+    orders: ordersStore.orders,
+    users: authStore.users,
+    feedback: feedbackStore.requests,
+    reviews: reviewsStore.reviews,
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `zoorum-backup-${new Date().toISOString().slice(0, 10)}.json`
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+function importData(e) {
+  const file = e.target.files?.[0]
+  if (!file) return
+  importStatus.value = 'Загрузка...'
+  const reader = new FileReader()
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result)
+      if (data.products) productsStore.products.splice(0, productsStore.products.length, ...data.products)
+      if (data.orders) ordersStore.orders.splice(0, ordersStore.orders.length, ...data.orders)
+      if (data.users) authStore.users.splice(0, authStore.users.length, ...data.users)
+      if (data.feedback) feedbackStore.requests.splice(0, feedbackStore.requests.length, ...data.feedback)
+      if (data.reviews) reviewsStore.reviews.splice(0, reviewsStore.reviews.length, ...data.reviews)
+      importStatus.value = 'Импорт успешно завершён!'
+      setTimeout(() => { importStatus.value = '' }, 3000)
+    } catch (err) {
+      importStatus.value = 'Ошибка: неверный формат файла'
+    }
+  }
+  reader.readAsText(file)
+  e.target.value = ''
+}
+
 const tabs = [
   { id: 'dashboard', label: 'Дашборд', icon: LayoutDashboard },
   { id: 'categories', label: 'Категории', icon: Archive },
@@ -197,6 +240,7 @@ const tabs = [
   { id: 'orders', label: 'Заказы', icon: Package },
   { id: 'users', label: 'Пользователи', icon: Users },
   { id: 'feedback', label: 'Отзывы', icon: MessageSquare },
+  { id: 'export', label: 'Экспорт', icon: Download },
 ]
 </script>
 
@@ -543,6 +587,30 @@ const tabs = [
         <div v-else class="panel py-16 text-center">
           <MessageSquare class="mx-auto h-12 w-12 text-line" />
           <p class="mt-4 font-semibold">Отзывов на товары пока нет</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export -->
+    <div v-if="activeTab === 'export'" class="mt-6">
+      <div class="panel">
+        <div class="mb-6">
+          <h3 class="font-display text-lg font-bold">Экспорт данных</h3>
+          <p class="mt-1 text-sm text-muted">Скачать все данные (товары, заказы, пользователи, отзывы) в JSON-файл</p>
+          <button class="btn-forest mt-4" @click="exportData">
+            <Download class="h-4 w-4" />
+            Скачать Backup
+          </button>
+        </div>
+        <div class="border-t border-line pt-6">
+          <h3 class="font-display text-lg font-bold">Импорт данных</h3>
+          <p class="mt-1 text-sm text-muted">Загрузить ранее сохранённый JSON-файл. Все текущие данные будут заменены.</p>
+          <label class="btn-outline mt-4 inline-flex cursor-pointer items-center gap-2">
+            <Upload class="h-4 w-4" />
+            Выбрать файл
+            <input type="file" accept=".json" class="hidden" @change="importData" />
+          </label>
+          <p v-if="importStatus" class="mt-3 text-sm font-bold" :class="importStatus.includes('Ошибка') ? 'text-coral' : 'text-forest'">{{ importStatus }}</p>
         </div>
       </div>
     </div>
