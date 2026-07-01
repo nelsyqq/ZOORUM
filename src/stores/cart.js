@@ -20,18 +20,22 @@ export const useCartStore = defineStore('cart', () => {
 
   watch(items, (val) => saveJSON('cart', val), { deep: true })
 
-  function addItem(product) {
-    const existing = items.value.find((i) => i.productId === product.id)
+  function addItem(product, weight) {
+    const cartKey = weight ? `${product.id}-${weight.label}` : String(product.id)
+    const price = weight ? weight.price : product.price
+    const existing = items.value.find((i) => i.cartKey === cartKey)
     if (existing) {
       if (product.stock && existing.quantity >= product.stock) return false
       existing.quantity++
     } else {
       items.value.push({
+        cartKey,
         productId: product.id,
-        name: product.name,
-        price: product.price,
-        oldPrice: product.oldPrice || null,
+        name: product.name + (weight ? ` (${weight.label})` : ''),
+        price,
+        oldPrice: weight?.oldPrice || product.oldPrice || null,
         image: product.image,
+        weightLabel: weight?.label || null,
         quantity: 1,
         stock: product.stock ?? 999,
       })
@@ -40,16 +44,16 @@ export const useCartStore = defineStore('cart', () => {
     return true
   }
 
-  function removeItem(productId) {
-    const index = items.value.findIndex((i) => i.productId === productId)
+  function removeItem(cartKey) {
+    const index = items.value.findIndex((i) => i.cartKey === cartKey)
     if (index !== -1) items.value.splice(index, 1)
   }
 
-  function updateQuantity(productId, quantity) {
-    const item = items.value.find((i) => i.productId === productId)
+  function updateQuantity(cartKey, quantity) {
+    const item = items.value.find((i) => i.cartKey === cartKey)
     if (!item) return
     if (quantity <= 0) {
-      removeItem(productId)
+      removeItem(cartKey)
     } else if (item.stock && quantity > item.stock) {
       item.quantity = item.stock
     } else {

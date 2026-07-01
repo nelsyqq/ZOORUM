@@ -4,7 +4,7 @@ import { ShoppingBag, Check } from 'lucide-vue-next'
 import { useCartStore } from '@/stores/cart'
 import { useToastStore } from '@/stores/toast'
 import { formatPrice, getCategoryLabel } from '@/utils/helpers'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps({
   product: { type: Object, required: true },
@@ -66,7 +66,8 @@ function onImgError(e) {
       <div class="flex items-center justify-between gap-2">
         <div class="flex flex-col">
           <span v-if="product.oldPrice" class="text-sm text-muted line-through">{{ formatPrice(product.oldPrice) }}</span>
-          <span class="font-display text-xl font-bold" :class="product.oldPrice ? 'text-coral' : 'text-forest'">{{ formatPrice(product.price) }}</span>
+          <span v-if="product.weights?.length" class="font-display text-lg font-bold text-forest">от {{ formatPrice(product.price) }}</span>
+          <span v-else class="font-display text-xl font-bold" :class="product.oldPrice ? 'text-coral' : 'text-forest'">{{ formatPrice(product.price) }}</span>
         </div>
         <button
           class="btn-forest btn-sm !rounded-full !px-3 transition-all duration-200 active:scale-90"

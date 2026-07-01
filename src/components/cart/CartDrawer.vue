@@ -120,7 +120,7 @@ function lineTotal(item) {
         <p class="mb-4 text-sm text-muted">Проверьте данные и укажите адрес доставки по России</p>
 
         <ul class="mb-4 space-y-2 rounded-paw bg-white p-3 shadow-soft">
-          <li v-for="item in cart.items" :key="item.productId" class="flex justify-between text-sm">
+          <li v-for="item in cart.items" :key="item.cartKey" class="flex justify-between text-sm">
             <span class="text-muted">{{ item.name }} × {{ item.quantity }}</span>
             <span class="font-bold">{{ formatPrice(lineTotal(item)) }}</span>
           </li>
@@ -162,7 +162,7 @@ function lineTotal(item) {
           <ul class="flex-1 overflow-y-auto px-5 py-3">
             <li
               v-for="item in cart.items"
-              :key="item.productId"
+              :key="item.cartKey"
               class="grid grid-cols-[72px_1fr_auto] gap-3 border-b border-line py-4 last:border-0"
             >
               <img
@@ -176,17 +176,17 @@ function lineTotal(item) {
                 <p class="mt-1 text-sm" :class="item.oldPrice ? 'text-coral' : 'text-forest'">{{ formatPrice(item.price) }} / шт.</p>
                 <p v-if="item.oldPrice" class="text-xs text-muted line-through">{{ formatPrice(item.oldPrice) }} / шт.</p>
                 <div class="mt-2 flex items-center gap-2">
-                  <button class="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-line font-bold transition-colors hover:bg-forest-light" aria-label="Уменьшить" @click="cart.updateQuantity(item.productId, item.quantity - 1)">
+                  <button class="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-line font-bold transition-colors hover:bg-forest-light" aria-label="Уменьшить" @click="cart.updateQuantity(item.cartKey, item.quantity - 1)">
                     <Minus class="h-4 w-4" />
                   </button>
                   <span class="min-w-[24px] text-center text-sm font-extrabold">{{ item.quantity }}</span>
-                  <button class="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-line font-bold transition-colors hover:bg-forest-light" aria-label="Увеличить" @click="cart.updateQuantity(item.productId, item.quantity + 1)">
+                  <button class="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-line font-bold transition-colors hover:bg-forest-light" aria-label="Увеличить" @click="cart.updateQuantity(item.cartKey, item.quantity + 1)">
                     <Plus class="h-3 w-3" />
                   </button>
                 </div>
                 <p class="mt-1 text-xs font-bold text-muted">Сумма: {{ formatPrice(lineTotal(item)) }}</p>
               </div>
-              <button class="text-2xl text-muted hover:text-coral" aria-label="Удалить" @click="cart.removeItem(item.productId)">×</button>
+              <button class="text-2xl text-muted hover:text-coral" aria-label="Удалить" @click="cart.removeItem(item.cartKey)">×</button>
             </li>
           </ul>
 

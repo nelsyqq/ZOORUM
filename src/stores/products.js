@@ -35,6 +35,7 @@ function migrateProducts(list) {
       ...p,
       image: p.images[0],
       oldPrice: p.oldPrice ?? null,
+      weights: p.weights ?? [],
     }
   })
 }

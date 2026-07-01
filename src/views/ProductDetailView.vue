@@ -50,6 +50,17 @@ const productImages = computed(() => {
 })
 
 const currentPhoto = ref(0)
+const selectedWeight = ref(null)
+
+const currentPrice = computed(() => {
+  if (selectedWeight.value) return selectedWeight.value.price
+  return product.value?.price ?? 0
+})
+
+const currentOldPrice = computed(() => {
+  if (selectedWeight.value?.oldPrice) return selectedWeight.value.oldPrice
+  return product.value?.oldPrice ?? null
+})
 
 function prevPhoto() {
   if (productImages.value.length <= 1) return
@@ -63,13 +74,15 @@ function nextPhoto() {
 
 function addToCart() {
   if (!product.value) return
-  const ok = cart.addItem(product.value)
+  const weight = selectedWeight.value || undefined
+  const name = product.value.name + (weight ? ` (${weight.label})` : '')
+  const ok = cart.addItem(product.value, weight)
   if (!ok) {
     toast.show('Достигнут лимит по наличию')
     return
   }
   justAdded.value = true
-  toast.show(product.value.name)
+  toast.show(name)
   setTimeout(() => { justAdded.value = false }, 1500)
 }
 
@@ -157,8 +170,25 @@ if (!product.value) {
         </div>
 
         <div class="mt-6 flex items-baseline gap-3">
-          <p v-if="product.oldPrice" class="text-2xl text-muted line-through">{{ formatPrice(product.oldPrice) }}</p>
-          <p class="text-3xl font-bold" :class="product.oldPrice ? 'text-coral' : 'text-forest'">{{ formatPrice(product.price) }}</p>
+          <p v-if="currentOldPrice" class="text-2xl text-muted line-through">{{ formatPrice(currentOldPrice) }}</p>
+          <p class="text-3xl font-bold" :class="currentOldPrice ? 'text-coral' : 'text-forest'">{{ formatPrice(currentPrice) }}</p>
+        </div>
+
+        <div v-if="product.weights?.length" class="mt-6">
+          <p class="mb-2 text-sm font-bold text-muted">Выберите вес:</p>
+          <div class="flex flex-wrap gap-2">
+            <button
+              v-for="(w, idx) in product.weights"
+              :key="idx"
+              class="rounded-lg border-2 px-4 py-2 text-sm font-bold transition-all"
+              :class="selectedWeight === w ? 'border-forest bg-forest-light text-forest-dark' : 'border-line bg-white text-ink hover:border-forest'"
+              @click="selectedWeight = w"
+            >
+              <span>{{ w.label }}</span>
+              <span v-if="w.oldPrice" class="ml-2 text-xs text-muted line-through">{{ formatPrice(w.oldPrice) }}</span>
+              <span class="ml-1" :class="w.oldPrice ? 'text-coral' : 'text-forest'">{{ formatPrice(w.price) }}</span>
+            </button>
+          </div>
         </div>
 
         <p class="mt-4 leading-relaxed text-muted">{{ product.description || 'Описание товара скоро появится.' }}</p>

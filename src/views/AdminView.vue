@@ -30,6 +30,7 @@ const productForm = reactive({
   stock: 0,
   image: '',
   images: [],
+  weights: [],
 })
 
 const categoryForm = reactive({ label: '' })
@@ -64,6 +65,7 @@ function resetProductForm() {
   productForm.stock = 0
   productForm.image = ''
   productForm.images = []
+  productForm.weights = []
   editingProduct.value = null
 }
 
@@ -82,6 +84,7 @@ function openEditProduct(product) {
   productForm.stock = product.stock
   productForm.images = [...(product.images?.length ? product.images : [product.image || ''])]
   productForm.image = productForm.images[0] || ''
+  productForm.weights = product.weights ? product.weights.map(w => ({ ...w })) : []
   showProductForm.value = true
 }
 
@@ -95,6 +98,7 @@ function saveProduct() {
     description: productForm.description,
     stock: productForm.stock,
     images: productForm.images.filter(Boolean),
+    weights: productForm.weights.filter(w => w.label && w.price),
   }
   if (!data.images.length) data.images = ['']
   if (editingProduct.value) {
@@ -176,6 +180,14 @@ function onImageUpload(e) {
 
 function removeImage(index) {
   productForm.images.splice(index, 1)
+}
+
+function addWeight() {
+  productForm.weights.push({ label: '', price: 0, oldPrice: null })
+}
+
+function removeWeight(index) {
+  productForm.weights.splice(index, 1)
 }
 
 const tabs = [
@@ -577,6 +589,21 @@ const tabs = [
               <div>
                 <label class="label">Описание</label>
                 <textarea v-model="productForm.description" rows="2" class="input resize-none" />
+              </div>
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <label class="label !mb-0">Варианты веса</label>
+                  <button type="button" class="btn-outline btn-sm" @click="addWeight">+ Добавить</button>
+                </div>
+                <div v-for="(w, idx) in productForm.weights" :key="idx" class="mb-2 flex items-center gap-2">
+                  <input v-model="w.label" type="text" class="input !py-2 w-24" placeholder="400 г" />
+                  <input v-model.number="w.price" type="number" min="0" class="input !py-2 w-28" placeholder="Цена" />
+                  <input v-model.number="w.oldPrice" type="number" min="0" class="input !py-2 w-28" placeholder="Старая цена" />
+                  <button type="button" class="rounded-lg p-2 text-stone-400 hover:bg-red-50 hover:text-red-500" @click="removeWeight(idx)">
+                    <Trash2 class="h-4 w-4" />
+                  </button>
+                </div>
+                <p v-if="!productForm.weights.length" class="text-xs text-muted">Нет вариантов веса. Добавьте, если товар продаётся в разных фасовках.</p>
               </div>
               <div>
                 <label class="label">Фото (до 5 шт.)</label>
