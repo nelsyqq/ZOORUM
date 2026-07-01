@@ -1,7 +1,6 @@
 <script setup>
 import { Heart, Users, Award, Stethoscope, ArrowRight } from 'lucide-vue-next'
 import { RouterLink } from 'vue-router'
-import { SITE_IMAGES } from '@/utils/images'
 
 const values = [
   { icon: Heart, title: 'Любовь к животным', text: 'Мы сами владельцы питомцев — наши главные консультанты.', color: 'bg-red-50 text-coral' },
@@ -11,10 +10,10 @@ const values = [
 ]
 
 const team = [
-  { name: 'Алёна', role: 'Основатель', img: SITE_IMAGES.pets.dogs },
-  { name: 'Ольга', role: 'Главный ветеринар', img: SITE_IMAGES.about.team },
-  { name: 'Игорь', role: 'Закупки и бренды', img: SITE_IMAGES.categories.food },
-  { name: 'Наталья', role: 'Забота о клиентах', img: SITE_IMAGES.pets.cats },
+  { name: 'Алёна', role: 'Основатель' },
+  { name: 'Ольга', role: 'Главный ветеринар' },
+  { name: 'Игорь', role: 'Закупки и бренды' },
+  { name: 'Наталья', role: 'Забота о клиентах' },
 ]
 </script>
 
@@ -54,12 +53,9 @@ const team = [
       <p class="mt-1 text-sm text-muted">Люди (и их питомцы), которые делают магазин особенным</p>
     </div>
     <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
-      <div v-for="(m, i) in team" :key="m.name" class="overflow-hidden rounded-blob bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-scale-in text-center" :class="`delay-${(i + 1) * 100}`">
-        <img :src="m.img" :alt="m.name" class="aspect-square w-full object-cover" />
-        <div class="p-3 sm:p-4">
-          <h3 class="font-display font-bold text-ink">{{ m.name }}</h3>
-          <p class="mt-0.5 text-xs text-muted">{{ m.role }}</p>
-        </div>
+      <div v-for="(m, i) in team" :key="m.name" class="rounded-blob bg-white p-5 text-center shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-scale-in" :class="`delay-${(i + 1) * 100}`">
+        <h3 class="font-display font-bold text-ink">{{ m.name }}</h3>
+        <p class="mt-0.5 text-xs text-muted">{{ m.role }}</p>
       </div>
     </div>
   </section>
