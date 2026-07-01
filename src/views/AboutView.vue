@@ -11,7 +11,7 @@ const values = [
 ]
 
 const team = [
-  { name: 'Алексей', role: 'Основатель', img: SITE_IMAGES.pets.dogs },
+  { name: 'Алёна', role: 'Основатель', img: SITE_IMAGES.pets.dogs },
   { name: 'Ольга', role: 'Главный ветеринар', img: SITE_IMAGES.about.team },
   { name: 'Игорь', role: 'Закупки и бренды', img: SITE_IMAGES.categories.food },
   { name: 'Наталья', role: 'Забота о клиентах', img: SITE_IMAGES.pets.cats },
