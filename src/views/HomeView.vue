@@ -117,7 +117,7 @@ const perks = [
   <section class="container-wrap py-10">
     <div class="grid gap-4 md:grid-cols-2">
       <RouterLink to="/catalog?category=food" class="group relative overflow-hidden rounded-blob shadow-paw">
-        <img src="https://i.ibb.co/PGnB9pHF/da6a12e2-64f3-4ca8-869a-6502ef0d673c.png" alt="Акция на корма" class="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        <img src="https://i.ibb.co/Lzgp0WRf/image.png" alt="Акция на корма" class="aspect-[16/9] w-full object-cover transition-transform duration-500 group-hover:scale-105" />
         <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent flex flex-col justify-end p-6 sm:p-8">
           <span class="inline-flex w-fit items-center gap-1 rounded-full bg-honey px-2.5 py-0.5 text-[10px] font-extrabold uppercase text-ink shadow-soft">Акция</span>
           <h3 class="mt-2 font-display text-2xl font-bold text-white sm:text-3xl">−15% на корма</h3>
