@@ -163,7 +163,7 @@ function onSearchBlur() {
         </RouterLink>
         <RouterLink to="/about" class="rounded-paw px-3 py-3 font-bold hover:bg-forest-light" @click="closeMobile">О нас</RouterLink>
         <RouterLink to="/contacts" class="rounded-paw px-3 py-3 font-bold hover:bg-forest-light" @click="closeMobile">Контакты</RouterLink>
-        <RouterLink to="/admin" class="rounded-paw px-3 py-3 font-bold hover:bg-forest-light" @click="closeMobile">Админ-панель</RouterLink>
+        <RouterLink v-if="auth.isAdmin" to="/admin" class="rounded-paw px-3 py-3 font-bold hover:bg-forest-light" @click="closeMobile">Админ-панель</RouterLink>
         <RouterLink to="/profile" class="btn-honey mt-4" @click="closeMobile">Личный кабинет</RouterLink>
       </nav>
       </Transition>
