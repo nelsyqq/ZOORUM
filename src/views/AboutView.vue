@@ -31,7 +31,7 @@ const team = [
   </section>
 
   <!-- Story -->
-  <section class="container-wrap grid items-center gap-8 pb-12 pt-12 lg:grid-cols-[3fr_2fr]">
+  <section class="container-wrap grid items-center gap-8 pb-4 pt-12 lg:grid-cols-[3fr_2fr]">
     <img src="https://avatars.mds.yandex.net/get-altay/13789674/2a0000019daff5e6c36ef81fccd01694292b/XXXL" alt="Зоомагазин" class="w-full rounded-blob object-cover shadow-paw animate-slide-right" />
     <div class="animate-slide-left">
       <span class="inline-flex items-center gap-1.5 rounded-full bg-forest-light px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-forest-dark">Как всё начиналось</span>
@@ -46,23 +46,11 @@ const team = [
     </div>
   </section>
 
-  <!-- Address & Delivery -->
-  <section class="container-wrap pb-12">
-    <div class="rounded-blob bg-gradient-to-r from-forest to-forest-dark p-6 text-center text-white shadow-paw sm:p-8 animate-scale-in">
-      <p class="font-display text-lg font-bold sm:text-xl">Приезжайте к нам за покупками</p>
-      <p class="mt-2 text-sm text-white/80">Владимирская обл., г. Юрьев-Польский, Советская площадь, 12</p>
-      <p class="mt-1 text-sm text-white/80">Ежедневно с 9:00 до 20:00 · Бесплатная доставка при заказе от 1500 ₽</p>
-      <RouterLink to="/contacts" class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white px-5 py-2 text-xs font-extrabold uppercase tracking-wider text-forest transition-all hover:bg-white/90">
-        Контакты <ArrowRight class="h-3.5 w-3.5" />
-      </RouterLink>
-    </div>
-  </section>
-
   <!-- Team -->
-  <section class="container-wrap py-8">
-    <div class="mb-6 text-center animate-fade-up">
+  <section class="container-wrap pt-0 pb-4">
+    <div class="mb-4 text-center animate-fade-up">
       <span class="inline-flex items-center gap-1 rounded-full bg-forest-light px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-forest-dark">Кто мы</span>
-      <h2 class="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">Команда ЗООРУМ</h2>
+      <h2 class="mt-2 font-display text-xl font-bold text-ink sm:text-2xl">Команда ЗООРУМ</h2>
       <p class="mt-1 text-sm text-muted">Люди (и их питомцы), которые делают магазин особенным</p>
     </div>
     <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -76,30 +64,12 @@ const team = [
     </div>
   </section>
 
-  <!-- Why us -->
-  <section class="container-wrap pb-12">
-    <div class="grid gap-4 sm:grid-cols-3">
-      <div class="rounded-blob bg-white p-5 text-center shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-fade-up">
-        <p class="font-display text-2xl font-extrabold text-forest">1500+</p>
-        <p class="mt-1 text-xs font-bold text-muted">товаров для питомцев</p>
-      </div>
-      <div class="rounded-blob bg-white p-5 text-center shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-fade-up delay-100">
-        <p class="font-display text-2xl font-extrabold text-forest">100%</p>
-        <p class="mt-1 text-xs font-bold text-muted">проверенное качество</p>
-      </div>
-      <div class="rounded-blob bg-white p-5 text-center shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-fade-up delay-200">
-        <p class="font-display text-2xl font-extrabold text-forest">20 мин</p>
-        <p class="mt-1 text-xs font-bold text-muted">сборка заказа</p>
-      </div>
-    </div>
-  </section>
-
   <!-- Values -->
-  <section class="bg-gradient-to-b from-forest-light/10 to-transparent py-8">
+  <section class="bg-gradient-to-b from-forest-light/10 to-transparent py-6">
     <div class="container-wrap">
-      <div class="mb-6 text-center animate-fade-up">
+      <div class="mb-4 text-center animate-fade-up">
         <span class="inline-flex items-center gap-1 rounded-full bg-forest-light px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-forest-dark">Наши принципы</span>
-        <h2 class="mt-2 font-display text-2xl font-bold text-ink sm:text-3xl">Наши ценности</h2>
+        <h2 class="mt-2 font-display text-xl font-bold text-ink sm:text-2xl">Наши ценности</h2>
         <p class="mt-1 text-sm text-muted">Четыре принципа, которым мы следуем каждый день</p>
       </div>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
