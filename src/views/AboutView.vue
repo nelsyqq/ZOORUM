@@ -10,10 +10,10 @@ const values = [
 ]
 
 const team = [
-  { name: 'Алёна', role: 'Основатель' },
-  { name: 'Ольга', role: 'Главный ветеринар' },
-  { name: 'Игорь', role: 'Закупки и бренды' },
-  { name: 'Наталья', role: 'Забота о клиентах' },
+  { name: 'Алёна', role: 'Основатель', gender: 'f' },
+  { name: 'Ольга', role: 'Главный ветеринар', gender: 'f' },
+  { name: 'Игорь', role: 'Закупки и бренды', gender: 'm' },
+  { name: 'Наталья', role: 'Забота о клиентах', gender: 'f' },
 ]
 </script>
 
@@ -54,6 +54,16 @@ const team = [
     </div>
     <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
       <div v-for="(m, i) in team" :key="m.name" class="rounded-blob bg-white p-5 text-center shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-paw animate-scale-in" :class="`delay-${(i + 1) * 100}`">
+        <div class="mx-auto mb-2 flex h-16 w-16 items-center justify-center rounded-full" :class="m.gender === 'f' ? 'bg-rose-50 text-rose-400' : 'bg-sky-50 text-sky-400'">
+          <svg v-if="m.gender === 'f'" viewBox="0 0 24 24" fill="currentColor" class="h-8 w-8">
+            <circle cx="12" cy="6" r="3.5"/>
+            <path d="M5 22c0-5 3-10 7-10s7 5 7 10"/>
+          </svg>
+          <svg v-else viewBox="0 0 24 24" fill="currentColor" class="h-8 w-8">
+            <circle cx="12" cy="5" r="4.5"/>
+            <path d="M2 23c0-8 4-15 10-15s10 7 10 15"/>
+          </svg>
+        </div>
         <h3 class="font-display font-bold text-ink">{{ m.name }}</h3>
         <p class="mt-0.5 text-xs text-muted">{{ m.role }}</p>
       </div>
