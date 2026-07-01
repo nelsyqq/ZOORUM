@@ -23,9 +23,10 @@ export const useCartStore = defineStore('cart', () => {
   function addItem(product, weight) {
     const cartKey = weight ? `${product.id}-${weight.label}` : String(product.id)
     const price = weight ? weight.price : product.price
+    const stock = weight ? (weight.stock ?? 999) : (product.stock ?? 999)
     const existing = items.value.find((i) => i.cartKey === cartKey)
     if (existing) {
-      if (product.stock && existing.quantity >= product.stock) return false
+      if (stock && existing.quantity >= stock) return false
       existing.quantity++
     } else {
       items.value.push({
@@ -37,7 +38,7 @@ export const useCartStore = defineStore('cart', () => {
         image: product.image,
         weightLabel: weight?.label || null,
         quantity: 1,
-        stock: product.stock ?? 999,
+        stock,
       })
     }
     isOpen.value = true

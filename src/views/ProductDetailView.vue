@@ -62,6 +62,11 @@ const currentOldPrice = computed(() => {
   return product.value?.oldPrice ?? null
 })
 
+const currentStock = computed(() => {
+  if (selectedWeight.value) return selectedWeight.value.stock ?? 0
+  return product.value?.stock ?? 0
+})
+
 function prevPhoto() {
   if (productImages.value.length <= 1) return
   currentPhoto.value = (currentPhoto.value - 1 + productImages.value.length) % productImages.value.length
@@ -133,7 +138,7 @@ if (!product.value) {
             @error="onImgError"
           />
           <img v-else :src="product.image" :alt="product.name" class="aspect-square w-full object-cover" @error="onImgError" />
-          <div v-if="product.stock <= 5" class="absolute left-4 top-4 rounded-full bg-coral px-3 py-1 text-xs font-bold text-white">Мало</div>
+          <div v-if="currentStock <= 5" class="absolute left-4 top-4 rounded-full bg-coral px-3 py-1 text-xs font-bold text-white">Мало</div>
           <button v-if="productImages.length > 1" class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/80 p-2 shadow-soft backdrop-blur-sm transition-colors hover:bg-white" @click="prevPhoto">
             <ChevronLeft class="h-5 w-5 text-ink" />
           </button>
@@ -194,14 +199,14 @@ if (!product.value) {
         <p class="mt-4 leading-relaxed text-muted">{{ product.description || 'Описание товара скоро появится.' }}</p>
 
         <div class="mt-6 flex items-center gap-4">
-          <span class="text-sm text-muted">В наличии: <strong class="text-ink">{{ product.stock }} шт.</strong></span>
+          <span class="text-sm text-muted">В наличии: <strong class="text-ink" :class="currentStock <= 5 ? 'text-coral' : ''">{{ currentStock }} шт.</strong></span>
         </div>
 
         <div class="mt-6 flex flex-wrap gap-3">
-          <button class="btn-forest min-w-[200px] text-base" :disabled="product.stock <= 0 || justAdded" @click="addToCart">
+          <button class="btn-forest min-w-[200px] text-base" :disabled="currentStock <= 0 || justAdded" @click="addToCart">
             <Check v-if="justAdded" class="h-5 w-5" />
             <ShoppingBag v-else class="h-5 w-5" />
-            {{ product.stock <= 0 ? 'Нет в наличии' : justAdded ? 'В корзине' : 'В корзину' }}
+            {{ currentStock <= 0 ? 'Нет в наличии' : justAdded ? 'В корзине' : 'В корзину' }}
           </button>
         </div>
 

@@ -183,7 +183,7 @@ function removeImage(index) {
 }
 
 function addWeight() {
-  productForm.weights.push({ label: '', price: 0, oldPrice: null })
+  productForm.weights.push({ label: '', price: 0, oldPrice: null, stock: 0 })
 }
 
 function removeWeight(index) {
@@ -595,10 +595,11 @@ const tabs = [
                   <label class="label !mb-0">Варианты веса</label>
                   <button type="button" class="btn-outline btn-sm" @click="addWeight">+ Добавить</button>
                 </div>
-                <div v-for="(w, idx) in productForm.weights" :key="idx" class="mb-2 flex items-center gap-2">
+                <div v-for="(w, idx) in productForm.weights" :key="idx" class="mb-2 flex flex-wrap items-center gap-2">
                   <input v-model="w.label" type="text" class="input !py-2 w-24" placeholder="400 г" />
-                  <input v-model.number="w.price" type="number" min="0" class="input !py-2 w-28" placeholder="Цена" />
-                  <input v-model.number="w.oldPrice" type="number" min="0" class="input !py-2 w-28" placeholder="Старая цена" />
+                  <input v-model.number="w.price" type="number" min="0" class="input !py-2 w-24" placeholder="Цена" />
+                  <input v-model.number="w.oldPrice" type="number" min="0" class="input !py-2 w-24" placeholder="Старая цена" />
+                  <input v-model.number="w.stock" type="number" min="0" class="input !py-2 w-20" placeholder="Ост." />
                   <button type="button" class="rounded-lg p-2 text-stone-400 hover:bg-red-50 hover:text-red-500" @click="removeWeight(idx)">
                     <Trash2 class="h-4 w-4" />
                   </button>
