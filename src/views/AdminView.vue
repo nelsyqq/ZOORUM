@@ -27,6 +27,7 @@ const productForm = reactive({
   price: 0,
   description: '',
   stock: 0,
+  image: '',
 })
 
 const categoryForm = reactive({ label: '' })
@@ -58,6 +59,7 @@ function resetProductForm() {
   productForm.price = 0
   productForm.description = ''
   productForm.stock = 0
+  productForm.image = ''
   editingProduct.value = null
 }
 
@@ -73,6 +75,7 @@ function openEditProduct(product) {
   productForm.price = product.price
   productForm.description = product.description
   productForm.stock = product.stock
+  productForm.image = product.image || ''
   showProductForm.value = true
 }
 
@@ -535,6 +538,13 @@ const tabs = [
               <div>
                 <label class="label">Описание</label>
                 <textarea v-model="productForm.description" rows="2" class="input resize-none" />
+              </div>
+              <div>
+                <label class="label">Изображение (URL)</label>
+                <div class="flex gap-3">
+                  <input v-model="productForm.image" type="text" class="input flex-1" placeholder="/images/products/nazvanie.jpg" />
+                  <img v-if="productForm.image" :src="productForm.image" alt="" class="h-10 w-10 shrink-0 rounded-lg border border-line object-cover" @error="$event.target.style.display='none'" />
+                </div>
               </div>
               <div>
                 <label class="label">Остаток</label>
